@@ -1,5 +1,5 @@
 # IMPORTANT
-**Do _NOT_ send feedback/reports to ChoiceOfGames Support if you run into an error or your game crashes while using cheats.** Feedback/reports are intended to debug **REAL** issues with the game, not problems resulting from modified stats and cheating.
+**Do _NOT_ send feedback or reports to ChoiceOfGames Support if you run into an error or your game crashes while using cheats.** Feedback and reports are intended to debug **REAL** issues with the game, not problems resulting from modified stats and cheating.
 
 *The following cheats allow you to modify a game's stats in ways the author did not intend, meaning it's very easy to break the game. If you do run into an error, simply hit cancel and restart the game from the beginning.*
 
