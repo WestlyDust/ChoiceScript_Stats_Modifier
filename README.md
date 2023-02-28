@@ -3,6 +3,8 @@
 
 *The following cheats allow you to modify a game's stats in ways the author likely did not intend, meaning it's very easy to break the game. If you do run into an error, simply hit cancel, close out of the game, and restart.*
 
+To avoid running into issues, I *highly* reccomend viewing the game's code before modifying any stats - Especially if you plan on using the Numbers, Booleans, and Strings Load.js, as it's the most complex option (and is currently the least tested).
+
 ## ChoiceScript_Stats_Modifier
 1. Copy everything from one of the following Load.js options
 2. Start the game
@@ -15,8 +17,11 @@
      - Going to any other page, like the stats page, will undo stats modifications
 
 ### [Load.js - Numbers Option](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers/Load.js)
+Modify numerical stats
 ### [Load.js - Numbers and Booleans Option](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans/Load.js)
+Modify numerical and boolean (true/false) stats
 ### [Load.js - Numbers, Booleans, and Strings Option](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans%26Strings/Load.js)
+Modify nearly all of the game's stats
 
 ## Credit
 Big thanks to JohnTheRedeemer for letting me build off his work - you can find the original code I based this off of here: https://github.com/JohnTheRedeemer/ChoiceScript_Modifier
