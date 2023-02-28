@@ -54,8 +54,8 @@ for (let i = 0; i < sceneFiles.length; i++) {
 			}
 		})
 		.catch(error => {
-			console.error("Error:", error);
-			console.error("Scene: " + sceneFile + ", Line: " + currentLine);
+			//console.error("Error:", error);
+			//console.error("Scene: " + sceneFile + ", Line: " + currentLine);
 		});
 }
 
@@ -99,7 +99,7 @@ function loadCheats() {
                 }
             }
 		} catch (err) {
-			console.log(`Error! ${key}: ${value}`);
+			//console.log(`Error! ${key}: ${value}`);
 		}
 	}
 
@@ -228,7 +228,7 @@ function loadCheats() {
 					}
 				}
 			} catch (err) {
-				console.log(`Error! ${key}: ${value}`);
+				//console.log(`Error! ${key}: ${value}`);
 			}
 		}
 
@@ -263,8 +263,8 @@ function loadCheats() {
                 }
 			}
 			catch (err) {
-				console.log(err, key, value);
+				//console.log(err, key, value);
 			}
 		}
-	}, 2500);
+	}, 5000);
 }
