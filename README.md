@@ -3,7 +3,7 @@
 
 *The following cheats allow you to modify a game's stats in ways the author did not intend, meaning it's very easy to break the game. If you do run into an error, simply hit cancel, close out of the game, and restart.*
 
-To avoid running into issues, I highly recommend viewing the game's code before modifying any stats - Especially if you plan on using the Numbers, Booleans, and Strings Load.js, as it's the most complex option (and is currently the least tested).
+To avoid running into issues, I highly recommend viewing the game's code before modifying any stats - Especially if you plan on using *Load.js - Numbers, Booleans, and Strings*, as it's the most complex option (and is currently the least tested).
 
 **Known Issues:**
 - An error related to the browser's memory/cache might occur. To fix it, close out of the game, then start it back up. You do not need to restart the game.
