@@ -5,7 +5,8 @@
 
 To avoid running into issues, I *highly* recommend viewing the game's code before modifying any stats - Especially if you plan on using the Numbers, Booleans, and Strings Load.js, as it's the most complex option (and is currently the least tested).
 
-**Known Issues:** An error related to the browser's memory/cache might occur. The game typically begins to noticably slow down before this happens. The best way to avoid this is to close out of the game, then start it back up and pick up where you left off.
+**Known Issues:**
+     - An error related to the browser's memory/cache might occur. The game typically begins to noticably slow down before this happens. The best way to avoid this is to close out of the game, then start it back up and pick up where you left off.
 
 ## ChoiceScript_Stats_Modifier
 1. Copy everything from one of the following Load.js options
