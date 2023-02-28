@@ -1,5 +1,5 @@
 # IMPORTANT
-Do NOT send feedback to ChoiceOfGames if you run into an error or your game crashes while using cheats. These cheats allow you to modify a game's stats in ways that could very easily break the game. This feedback and reports are intended to debug real issues with the game, not issues resulting from modified stats and cheating.
+Do NOT send feedback/reports to ChoiceOfGames if you run into an error or your game crashes while using cheats. Feedback/reports are intended to debug REAL issues with the game, not issues resulting from modified stats and cheating. The following cheats allow you to modify a game's stats in ways the author likely did not intend, meaning it's very easy to break the game. If you do run into an error, simply hit cancel, close out of the game, and restart.
 
 # ChoiceScript_Stats_Modifier
 1. Copy everything from one of the following Load.js options
