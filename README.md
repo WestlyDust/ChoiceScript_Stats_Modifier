@@ -5,3 +5,9 @@
 4. Paste code in console and press enter
 5. Cheats button should appear on screen
 6. After changing stats and closing window, click next in-game (going to any other page, like show stats, will undo changes)
+
+# Cheat (Numbers)
+
+# Cheat (Numbers and Booleans)
+
+# Cheat (Numbers, Booleans, and Strings)
