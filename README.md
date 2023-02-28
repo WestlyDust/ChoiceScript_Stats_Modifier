@@ -21,10 +21,8 @@ To avoid running into issues, I highly recommend viewing the game's code before 
 
 ### [Load.js - Numbers](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers/Load.js)
 *Modify numerical stats*
-
 ### [Load.js - Numbers and Booleans](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans/Load.js)
 *Modify numerical and boolean (true/false) stats*
-
 ### [Load.js - Numbers, Booleans, and Strings](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans%26Strings/Load.js)
 *Modify nearly all of the game's stats*
 
