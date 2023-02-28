@@ -1,3 +1,63 @@
+let sceneList = stats.scene.nav._sceneList;
+
+let url = window.location.href;
+let baseURL = url.replace("index.html", "");
+
+let stringValues = {};
+
+let currentLine = "";
+
+let sceneFiles = sceneList.map(function (sceneName) {
+	return sceneName + ".txt";
+});
+
+// Iterate through each scene file
+for (let i = 0; i < sceneFiles.length; i++) {
+	let sceneFile = sceneFiles[i];
+
+	// Load the scene file content
+	let sceneURL = baseURL + "mygame/scenes/" + sceneFile;
+
+	fetch(sceneURL)
+		.then(response => {
+			if (!response.ok) {
+				throw new Error("Network response was not ok");
+			}
+			return response.text();
+		})
+		.then(text => {
+			// Split the scene file content into lines
+			let sceneLines = text.split("\n");
+
+			// Iterate through each line of the scene file
+			for (let j = 0; j < sceneLines.length; j++) {
+				let line = sceneLines[j].trim();
+				currentLine = line;
+
+				// Check if the line starts with *create or *temp or *set
+				if ((line.startsWith("*create") || line.startsWith("*temp") || line.startsWith("*set")) && line.split(" ").length > 2) {
+					if (line.split(" ")[2].startsWith('"')) {
+						// Extract the name of the string
+						let name = line.split(" ")[1].toLowerCase();
+						// Extract the value of the string
+						let value = line.split('"')[1];
+
+						stringValues[name] = stringValues[name] || [];
+
+						if (!stringValues[name].includes(value)) {
+							// Add the value to the stringValues object
+							stringValues[name].push(value);
+							//console.log(name + ": " + value);
+						}
+					}
+				}
+			}
+		})
+		.catch(error => {
+			console.error("Error:", error);
+			console.error("Scene: " + sceneFile + ", Line: " + currentLine);
+		});
+}
 
 function loadCheats() {
 	// open a new pop up window to put all the stats and give it a title
@@ -16,28 +76,41 @@ function loadCheats() {
 			if (typeof value == "boolean") {
 				// variable is a boolean
 				let val = value;
-				console.log(`${key}: ${val}: ${typeof val}`);
+				//console.log(`${key}: ${val}: ${typeof val}`);
 				modifiableStats.push({ key: key, value: val, type: "boolean" });
 			}
 			let val = parseInt(value);
 			if (Number.isNaN(val) == false) {
 				// variable is a number
-				console.log(`${key}: ${val}: ${typeof val}`);
+				//console.log(`${key}: ${val}: ${typeof val}`);
 				modifiableStats.push({ key: key, value: val, type: "number" });
 				statModifiers[key] = { value: { min: 0, max: 100 } };
 			}
+			else {
+				let val = value;
+				if (typeof val == "string") {
+					// variable is a string
+					if (typeof stringValues[key] != "undefined") {
+						if (stringValues[key].length > 1) {
+							//console.log(`${key}: ${val}: ${typeof val}`);
+							modifiableStats.push({ key: key, value: val, type: "string" });
+                        }
+                    }
+                }
+            }
 		} catch (err) {
 			console.log(`Error! ${key}: ${value}`);
 		}
 	}
 
-	console.log('Number stats processed');
+	console.log('Stats processed');
 
 	// this will create the javscript that is used for updating values with stats in-game, passing values back and forth, and adding limits
 	console.log('Creating script tag to hold dynamic javascript');
 	let scriptHtml = "function changeValue(key){ let newVal = document.getElementById(key).value; console.log('val', newVal); console.log('Changing ', key, ' in parent'); console.log('stat', window.opener.stats[key], newVal); window.opener.stats[key] = newVal; } ";
 
 	// todo, update existing values to selected range
+	scriptHtml += "function modifyString(key) { let val = document.getElementById(key).value; window.opener.stats[key] = val; console.log(val, window.opener.stats[key])}";
 	scriptHtml += "function changeValueBoolean(key) { let val = document.getElementById(key).value; if (val == 'true') { window.opener.stats[key] = false; } else { window.opener.stats[key] = true; } console.log(val, window.opener.stats[key])}";
 	scriptHtml += "function modifyStatMin(key){ console.log('key', key, window.opener.statModifiers[key]); let newVal = parseInt(document.getElementById(key+'Min').value); document.getElementById(key).min = newVal; window.opener.statModifiers[key]['value']['min'] = newVal; }";
 	scriptHtml += "function modifyStatMax(key){ console.log('key', key, window.openr.statModifiers[key]); let newVal = parseInt(document.getElementById(key+'Max').value); document.getElementById(key).max = newVal; window.opener.statModifiers[key]['value']['max'] = newVal; }";
@@ -103,6 +176,19 @@ function loadCheats() {
 			html += '<td><span>Min: </span> <input id="' + key + 'Min" type="number" value="' + statModifiers[key]['value']['min'] + '" style="width:25%" onchange="modifyStatMin(\'' + key + '\');" /> <span>Max: </span> <input id="' + key + 'Max" type="number" value="' + statModifiers[key]['value']['max'] + '" style="width:25%" onchange="modifyStatMax(\'' + key + '\');" /></td>';
 			html += '<td><input type="range" id="' + key + '" name="' + key + '" min="' + statModifiers[key]['value']['min'] + '" max="' + statModifiers[key]['value']['max'] + '" value="' + value + '" onchange="changeValue(\'' + key + '\')"/><span id="text-' + key + '">' + value + '</span></td>';
 		}
+		if (type == "string") {
+			html += '<td><span>String Value</span></td>';
+			html += '<td><select name="' + key + '" id="' + key + '" onchange="modifyString(\'' + key + '\')">';
+			let currentValue = value;
+			html += '<option value="' + value + '">' + value + '</option>';
+			for (let i = 0; i < stringValues[key].length; i++) {
+				value = stringValues[key][i];
+				if (value != currentValue) {
+					html += '<option value="' + value + '">' + value + '</option>';
+                }
+			}
+			html += '</select></td>';
+        }
 		html += '</tr>';
 
 		//TODO: Add matching pairs to update in sync 
@@ -129,6 +215,18 @@ function loadCheats() {
 					modifiableStats.push({ key: key, value: val, type: "number" });
 					statModifiers[key] = { value: { min: 0, max: 100 } };
 				}
+				else {
+					let val = value;
+					if (typeof val == "string") {
+						// variable is a string
+						if (typeof stringValues[key] != "undefined") {
+							if (stringValues[key].length > 1) {
+								//console.log(`${key}: ${val}: ${typeof val}`);
+								modifiableStats.push({ key: key, value: val, type: "string" });
+							}
+						}
+					}
+				}
 			} catch (err) {
 				console.log(`Error! ${key}: ${value}`);
 			}
@@ -148,6 +246,21 @@ function loadCheats() {
 				if (type == "boolean") {
 					childWindow.document.getElementById(key).checked = value;
 				}
+				if (type == "string") {
+					let selectElement = document.getElementById(key);
+					let val = selectElement.value;
+					let options = selectElement.options;
+
+					for (let i = 0; i < options.length; i++) {
+						let option = options[i];
+
+						if (option.value != val) {
+							option.removeAttribute("selected");
+						} else {
+							option.setAttribute("selected", "");
+						}
+					}
+                }
 			}
 			catch (err) {
 				console.log(err, key, value);
