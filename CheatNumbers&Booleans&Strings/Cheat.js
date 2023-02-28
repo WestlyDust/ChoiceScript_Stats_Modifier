@@ -202,6 +202,9 @@ function loadCheats() {
 	// every 2.5 seconds, update the existing table with the values found in the game stats. 
 	// Sometimes the game will reset the stats, so this ensures the player always sees the latest values
 	setInterval(function () {
+		  // Clear the arrays before adding new items
+  		modifiableStats = [];
+  		statModifiers = [];
 		for (const [key, value] of Object.entries(stats)) {
 			try {
 				if (typeof value == "boolean") {
