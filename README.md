@@ -6,7 +6,7 @@
 To avoid running into issues, I highly recommend viewing the game's code before modifying any stats - especially if you plan on using *Load.js - Numbers, Booleans, and Strings*, as it's the most complex option (and currently the least tested).
 
 **Known Issues:**
-- An error related to the browser's memory/cache might occur. This can make the game lag and slow down. To fix it, either close out of the game and then start it back up, or use the Reload button. You do not need to restart the game - just remember to click next before closing out of the game or hitting reload to save any changes you made to the stats.
+- An error related to the browser's memory/cache might occur. This can make the game lag and slow down. To fix it, either close out of the game and then start it back up, or use the Reload button. You do not need to restart the game - just remember to click next before reloading to save any changes you made to the stats.
 
 ## ChoiceScript_Stats_Modifier
 1. Copy everything from one of the following Load.js options
@@ -24,7 +24,7 @@ To avoid running into issues, I highly recommend viewing the game's code before 
 ### [Load.js - Numbers and Booleans](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans/Load.js)
 * Modify numerical and boolean (true/false) stats
 ### [Load.js - Numbers, Booleans, and Strings](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans%26Strings/Load.js)
-* Modify nearly all of the game's stats
+* Modify nearly all of the game's stats. This option tends to slow down the game significantly, so you'll want to use the Reload button after modifying and saving stat changes
 
 ## Credit
 Big thanks to JohnTheRedeemer for letting me build off his work - you can find the original code I based this off of here: https://github.com/JohnTheRedeemer/ChoiceScript_Modifier
