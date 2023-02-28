@@ -3,10 +3,10 @@
 
 *The following cheats allow you to modify a game's stats in ways the author did not intend, meaning it's very easy to break the game. If you do run into an error, simply hit cancel and restart the game from the beginning.*
 
-To avoid running into issues, I highly recommend viewing the game's code before modifying any stats - Especially if you plan on using *Load.js - Numbers, Booleans, and Strings*, as it's the most complex option (and currently the least tested).
+To avoid running into issues, I highly recommend viewing the game's code before modifying any stats - especially if you plan on using *Load.js - Numbers, Booleans, and Strings*, as it's the most complex option (and currently the least tested).
 
 **Known Issues:**
-- An error related to the browser's memory/cache might occur. To fix it, close out of the game, then start it back up. You do not need to restart the game.
+- An error related to the browser's memory/cache might occur. This can make the game lag and slow down. To fix it, either close out of the game and then start it back up, or use the Reload button. You do not need to restart the game - just remember to click next before closing out of the game or hitting reload to save any changes you made to the stats.
 
 ## ChoiceScript_Stats_Modifier
 1. Copy everything from one of the following Load.js options
