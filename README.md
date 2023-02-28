@@ -9,5 +9,5 @@
 # Cheat (Numbers)
 https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers
 # Cheat (Numbers and Booleans)
-
+https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers%26Booleans
 # Cheat (Numbers, Booleans, and Strings)
