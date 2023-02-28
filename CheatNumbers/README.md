@@ -1,4 +1,4 @@
-# Copy The Following:
+# Copy & Paste the Following:
 
 function injectScript(src) {
     return new Promise((resolve, reject) => {
