@@ -19,11 +19,12 @@ To avoid running into issues, I highly recommend viewing the game's code before 
 7. After changing the desired stats, close the window, and click next to progress the game
      - Going to any other page, like the stats page, will undo stats modifications
 
-## [Load.js - Numbers](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers/Load.js)
-Modify numerical stats
-## [Load.js - Numbers and Booleans](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans/Load.js)
+# [Load.js - Numbers](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers/Load.js)
+- 
+     - Modify numerical stats
+# [Load.js - Numbers and Booleans](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans/Load.js)
 Modify numerical and boolean (true/false) stats
-## [Load.js - Numbers, Booleans, and Strings](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans%26Strings/Load.js)
+# [Load.js - Numbers, Booleans, and Strings](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans%26Strings/Load.js)
 Modify nearly all of the game's stats
 
 ## Credit
