@@ -266,5 +266,5 @@ function loadCheats() {
 				//console.log(err, key, value);
 			}
 		}
-	}, 5000);
+	}, 4000);
 }
