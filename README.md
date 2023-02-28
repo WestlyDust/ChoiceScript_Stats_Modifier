@@ -5,11 +5,14 @@ The following cheats allow you to modify a game's stats in ways the author likel
 
 # ChoiceScript_Stats_Modifier
 1. Copy everything from one of the following Load.js options
-2. Navigate to game (must not be on stats page)
-3. Open browser dev console -> (right click, inspect, console)
-4. Paste code in console and press enter
-5. Cheats button should appear on screen
-6. After changing stats and closing window, click next to progress game (going to any other page, like stats page, will undo changes)
+2. Start the game
+- Make sure you've begun the game and are not on a side page (like the stats page)
+3. Open the developer console -> (right click, inspect, console)
+4. Paste Load.js code in the console and press enter
+5. The cheats button should appear on the game screen
+6. Clicking the button should open the Cheat window where you can now modify the game stats
+7. After changing the desired stats, close the window, and click next to progress the game
+- Going to any other page, like the stats page, will undo stats modifications
 
 # [Load.js - Numbers Option](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers/Load.js)
 # [Load.js - Numbers and Booleans Option](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans/Load.js)
