@@ -17,3 +17,6 @@ https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers
 https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers%26Booleans
 # Load.js - Numbers, Booleans, and Strings Option
 https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers%26Booleans%26Strings
+
+# Credit
+Big thanks to JohnTheRedeemer for letting me build off his work - you can find his original code I based this off of here: https://github.com/JohnTheRedeemer/ChoiceScript_Modifier
