@@ -16,3 +16,4 @@ injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier
     }).catch(error => {
         console.error(error);
     });
+
