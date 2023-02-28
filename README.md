@@ -20,11 +20,11 @@ To avoid running into issues, I highly recommend viewing the game's code before 
      - Going to any other page, like the stats page, will undo stats modifications
 
 ### [Load.js - Numbers](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers/Load.js)
-*Modify numerical stats*
+* Modify numerical stats
 ### [Load.js - Numbers and Booleans](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans/Load.js)
-*Modify numerical and boolean (true/false) stats*
+* Modify numerical and boolean (true/false) stats
 ### [Load.js - Numbers, Booleans, and Strings](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/main/CheatNumbers%26Booleans%26Strings/Load.js)
-*Modify nearly all of the game's stats*
+* Modify nearly all of the game's stats
 
 ## Credit
 Big thanks to JohnTheRedeemer for letting me build off his work - you can find the original code I based this off of here: https://github.com/JohnTheRedeemer/ChoiceScript_Modifier
