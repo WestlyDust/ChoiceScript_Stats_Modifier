@@ -1,7 +1,7 @@
 # IMPORTANT
-**Do _NOT_ send feedback/reports to ChoiceOfGames Support if you run into an error or your game crashes while using cheats.** Feedback/reports are intended to debug **REAL** issues with the game, not issues resulting from modified stats and cheating.
+**Do _NOT_ send feedback/reports to ChoiceOfGames Support if you run into an error or your game crashes while using cheats.** Feedback/reports are intended to debug **REAL** issues with the game, not problems resulting from modified stats and cheating.
 
-*The following cheats allow you to modify a game's stats in ways the author likely did not intend, meaning it's very easy to break the game. If you do run into an error, simply hit cancel, close out of the game, and restart.*
+*The following cheats allow you to modify a game's stats in ways the author did not intend, meaning it's very easy to break the game. If you do run into an error, simply hit cancel, close out of the game, and restart.*
 
 To avoid running into issues, I *highly* reccomend viewing the game's code before modifying any stats - Especially if you plan on using the Numbers, Booleans, and Strings Load.js, as it's the most complex option (and is currently the least tested).
 
