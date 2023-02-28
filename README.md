@@ -6,9 +6,9 @@
 5. Cheats button should appear on screen
 6. After changing stats and closing window, click next in-game (going to any other page, like show stats, will undo changes)
 
-# Cheat (Numbers)
+# Load.js - Numbers Option
 https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers
-# Cheat (Numbers and Booleans)
+# Load.js - Numbers and Booleans Option
 https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers%26Booleans
-# Cheat (Numbers, Booleans, and Strings)
+# Load.js - Numbers, Booleans, and Strings Option
 https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers%26Booleans%26Strings
