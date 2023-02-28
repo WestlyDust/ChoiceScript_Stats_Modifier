@@ -12,11 +12,11 @@ The following cheats allow you to modify a game's stats in ways the author likel
 6. After changing stats and closing window, click next to progress game (going to any other page, like stats page, will undo changes)
 
 # Load.js - Numbers Option
-https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers
+https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers/Load.js
 # Load.js - Numbers and Booleans Option
-https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers%26Booleans
+https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers%26Booleans/Load.js
 # Load.js - Numbers, Booleans, and Strings Option
-https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers%26Booleans%26Strings
+https://github.com/WestlyDust/ChoiceScript_Stats_Modifier/tree/main/CheatNumbers%26Booleans%26Strings/Load.js
 
 # Credit
 Big thanks to JohnTheRedeemer for letting me build off his work - you can find his original code I based this off of here: https://github.com/JohnTheRedeemer/ChoiceScript_Modifier
