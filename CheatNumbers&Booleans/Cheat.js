@@ -20,6 +20,9 @@ let statModifiers = [];
 
 // Function to update the modifiableStats and statModifiers arrays
 function updateStats() {
+	// Clear the modifiableStats and statModifiers arrays
+	modifiableStats = [];
+	statModifiers = [];
 	// compile all the numeric & boolean stats
 	for (const [key, value] of Object.entries(stats)) {
 		try {
