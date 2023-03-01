@@ -1,6 +1,5 @@
 let sceneList = stats.scene.nav._sceneList;
 
-
 let url = window.location.href;
 const baseURL = url.replace("index.html", "");
 
