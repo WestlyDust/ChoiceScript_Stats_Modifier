@@ -1,3 +1,4 @@
+![image](https://user-images.githubusercontent.com/93689946/222035758-f3e8ea30-7970-445e-8e23-d7573860b186.png)
 # IMPORTANT
 **Do _NOT_ send feedback or reports to ChoiceOfGames Support if you run into an error or your game crashes while using cheats.** Feedback and reports are intended to debug **REAL** issues with the game, not problems resulting from modified stats and cheating.
 
