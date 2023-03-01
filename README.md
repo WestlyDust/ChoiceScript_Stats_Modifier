@@ -8,7 +8,7 @@ To avoid running into issues, I highly recommend viewing the game's code before 
 **Possible Issues:**
 - An error related to the browser's memory/cache might occur that can make the game lag and slow down. Use the Reload button or close out of the game if this happens. You do not need to restart the game progress - just remember to click next before reloading to save any changes you made to the stats.
 
-## ChoiceScript_Stats_Modifier
+## ChoiceScript_Stats_Modifier  [![HitCount](https://hits.dwyl.com/WestlyDust/ChoiceScript_Stats_Modifier.svg?style=flat-square&show=unique)](http://hits.dwyl.com/WestlyDust/ChoiceScript_Stats_Modifier)
 1. Copy everything from one of the following Load.js options
 2. Start the game
      - Make sure you've begun the game and are not on a side page (like the stats page)
