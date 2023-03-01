@@ -1,21 +1,31 @@
-function loadCheats() {
-	// open a new pop up window to put all the stats and give it a title
-	childWindow = window.open('', '47288', 'width=1280,height=720,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizeable=0,left=0,top=0');
-	childWindow.document.title = 'ChoiceScript Editor';
+// Define the callback function to call when a change occurs
+function handleStatsChange() {
+	updateStats();
+}
 
-	modifiableStats = [];
-	statModifiers = [];
+// Create a Proxy object to listen for changes to the stats object
+const statsProxy = new Proxy(stats, {
+	set: function (target, property, value) {
+		target[property] = value;
+		handleStatsChange();
+		return true;
+	},
+});
 
-	// show the stats available (including non-numeric ones)
-	console.log('stats', stats);
+// Replace the original stats object with the Proxy object
+stats = statsProxy;
 
+let modifiableStats = [];
+let statModifiers = [];
+
+// Function to update the modifiableStats and statModifiers arrays
+function updateStats() {
 	// compile all the numeric stats
 	for (const [key, value] of Object.entries(stats)) {
 		try {
 			let val = parseInt(value);
 			if (Number.isNaN(val) == false) {
 				// variable is a number
-				//console.log(`${key}: ${val}: ${typeof val}`);
 				modifiableStats.push({ key: key, value: val, type: "number" });
 				statModifiers[key] = { value: { min: 0, max: 100 } };
 			}
@@ -23,11 +33,17 @@ function loadCheats() {
 			console.log(`Error! ${key}: ${value}`);
 		}
 	}
+}
 
-	console.log('Stats processed');
+function loadCheats() {
+	// open a new pop up window to put all the stats and give it a title
+	childWindow = window.open('', '47288', 'width=1280,height=720,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizeable=0,left=0,top=0');
+	childWindow.document.title = 'ChoiceScript Editor';
+
+	// Call updateStats once at the start to initialize the arrays
+	updateStats();
 
 	// this will create the javscript that is used for updating values with stats in-game, passing values back and forth, and adding limits
-	console.log('Creating script tag to hold dynamic javascript');
 	let scriptHtml = "function changeValue(key){ let newVal = document.getElementById(key).value; console.log('val', newVal); console.log('Changing ', key, ' in parent'); console.log('stat', window.opener.stats[key], newVal); window.opener.stats[key] = newVal; } ";
 
 	// todo, update existing values to selected range
@@ -100,41 +116,40 @@ function loadCheats() {
 	html += '</table>';
 
 	wrapperDiv.innerHTML = html;
-
-	// every 2.5 seconds, update the existing table with the values found in the game stats. 
-	// Sometimes the game will reset the stats, so this ensures the player always sees the latest values
-	setInterval(function () {
-		  // Clear the arrays before adding new items
-  		modifiableStats = [];
-  		statModifiers = [];
-		for (const [key, value] of Object.entries(stats)) {
-			try {
-				let val = parseInt(value);
-				if (Number.isNaN(val) == false) {
-					//console.log(`${key}: ${val}: ${typeof val}`);
-					modifiableStats.push({ key: key, value: val, type: "number" });
-					statModifiers[key] = { value: { min: 0, max: 100 } };
-				}
-			} catch (err) {
-				console.log(`Error! ${key}: ${value}`);
-			}
-		}
-
-		for (let index = 0; index < modifiableStats.length; index++) {
-
-			let key = modifiableStats[index].key;
-			let value = modifiableStats[index].value;
-			let type = modifiableStats[index].type;
-
-			try {
-				childWindow.document.getElementById(key).value = value;
-				if (type == "number") {
-					childWindow.document.getElementById('text-' + key).innerText = value;
-				}
-			}
-			catch (err) {
-				console.log(err, key, value);
-			}
-		}
-	}, 2500);
 }
+
+// every 2.5 seconds, update the existing table with the values found in the game stats. 
+// Sometimes the game will reset the stats, so this ensures the player always sees the latest values
+setInterval(function () {
+	// Clear the modifiableStats and statModifiers arrays
+	modifiableStats = [];
+	statModifiers = [];
+	for (const [key, value] of Object.entries(stats)) {
+		try {
+			let val = parseInt(value);
+			if (Number.isNaN(val) == false) {
+				modifiableStats.push({ key: key, value: val, type: "number" });
+				statModifiers[key] = { value: { min: 0, max: 100 } };
+			}
+		} catch (err) {
+			console.log(`Error! ${key}: ${value}`);
+		}
+	}
+
+	for (let index = 0; index < modifiableStats.length; index++) {
+
+		let key = modifiableStats[index].key;
+		let value = modifiableStats[index].value;
+		let type = modifiableStats[index].type;
+
+		try {
+			childWindow.document.getElementById(key).value = value;
+			if (type == "number") {
+				childWindow.document.getElementById('text-' + key).innerText = value;
+			}
+		}
+		catch (err) {
+			console.log(err, key, value);
+		}
+	}
+}, 2500);

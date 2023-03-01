@@ -1,7 +1,7 @@
 let sceneList = stats.scene.nav._sceneList;
 
 let url = window.location.href;
-let baseURL = url.replace("index.html", "");
+const baseURL = url.replace("index.html", "");
 
 let stringValues = {};
 
@@ -47,42 +47,49 @@ for (let i = 0; i < sceneFiles.length; i++) {
 						if (!stringValues[name].includes(value)) {
 							// Add the value to the stringValues object
 							stringValues[name].push(value);
-							//console.log(name + ": " + value);
 						}
 					}
 				}
 			}
 		})
 		.catch(error => {
-			//console.error("Error:", error);
-			//console.error("Scene: " + sceneFile + ", Line: " + currentLine);
+			console.error("Error:", error);
 		});
 }
 
-function loadCheats() {
-	// open a new pop up window to put all the stats and give it a title
-	childWindow = window.open('', '47288', 'width=1280,height=720,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizeable=0,left=0,top=0');
-	childWindow.document.title = 'ChoiceScript Editor';
+// Define the callback function to call when a change occurs
+function handleStatsChange() {
+	updateStats();
+}
 
-	modifiableStats = [];
-	statModifiers = [];
+// Create a Proxy object to listen for changes to the stats object
+const statsProxy = new Proxy(stats, {
+	set: function (target, property, value) {
+		target[property] = value;
+		handleStatsChange();
+		return true;
+	},
+});
 
-	// show the stats available (including non-numeric ones)
-	console.log('stats', stats);
+// Replace the original stats object with the Proxy object
+stats = statsProxy;
 
-	// compile all the numeric stats
+let modifiableStats = [];
+let statModifiers = [];
+
+// Function to update the modifiableStats and statModifiers arrays
+function updateStats() {
+	// compile all the stats
 	for (const [key, value] of Object.entries(stats)) {
 		try {
 			if (typeof value == "boolean") {
 				// variable is a boolean
 				let val = value;
-				//console.log(`${key}: ${val}: ${typeof val}`);
 				modifiableStats.push({ key: key, value: val, type: "boolean" });
 			}
 			let val = parseInt(value);
 			if (Number.isNaN(val) == false) {
 				// variable is a number
-				//console.log(`${key}: ${val}: ${typeof val}`);
 				modifiableStats.push({ key: key, value: val, type: "number" });
 				statModifiers[key] = { value: { min: 0, max: 100 } };
 			}
@@ -90,23 +97,26 @@ function loadCheats() {
 				let val = value;
 				if (typeof val == "string") {
 					// variable is a string
-					if (typeof stringValues[key] != "undefined") {
-						if (stringValues[key].length > 1) {
-							//console.log(`${key}: ${val}: ${typeof val}`);
-							modifiableStats.push({ key: key, value: val, type: "string" });
-                        }
-                    }
-                }
-            }
+					if (typeof stringValues[key] != "undefined" && stringValues[key].length > 1) {
+						modifiableStats.push({ key: key, value: val, type: "string" });
+					}
+				}
+			}
 		} catch (err) {
-			//console.log(`Error! ${key}: ${value}`);
+			console.log(`Error! ${key}: ${value}`);
 		}
 	}
+}
 
-	console.log('Stats processed');
+function loadCheats() {
+	// open a new pop up window to put all the stats and give it a title
+	childWindow = window.open('', '47288', 'width=1280,height=720,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizeable=0,left=0,top=0');
+	childWindow.document.title = 'ChoiceScript Editor';
+
+	// Call updateStats once at the start to initialize the arrays
+	updateStats();
 
 	// this will create the javscript that is used for updating values with stats in-game, passing values back and forth, and adding limits
-	console.log('Creating script tag to hold dynamic javascript');
 	let scriptHtml = "function changeValue(key){ let newVal = document.getElementById(key).value; console.log('val', newVal); console.log('Changing ', key, ' in parent'); console.log('stat', window.opener.stats[key], newVal); window.opener.stats[key] = newVal; } ";
 
 	// todo, update existing values to selected range
@@ -123,7 +133,6 @@ function loadCheats() {
 	childWindow.document.body.appendChild(scriptTag);
 
 	// create a simple table to display the names, values, and inputs
-	console.log('Creating ui');
 	let wrapperDiv = childWindow.document.createElement('div');
 	wrapperDiv.innerHTML = '<p>This is a <b>test</b></p>'
 	childWindow.document.body.appendChild(wrapperDiv);
@@ -198,76 +207,77 @@ function loadCheats() {
 	html += '</table>';
 
 	wrapperDiv.innerHTML = html;
-
-	// every 2.5 seconds, update the existing table with the values found in the game stats. 
-	// Sometimes the game will reset the stats, so this ensures the player always sees the latest values
-	setInterval(function () {
-		  // Clear the arrays before adding new items
-  		modifiableStats = [];
-  		statModifiers = [];
-		for (const [key, value] of Object.entries(stats)) {
-			try {
-				if (typeof value == "boolean") {
-					let val = value;
-					//console.log(`${key}: ${val}: ${typeof val}`);
-					modifiableStats.push({ key: key, value: val, type: "boolean" });
-				}
-				let val = parseInt(value);
-				if (Number.isNaN(val) == false) {
-					//console.log(`${key}: ${val}: ${typeof val}`);
-					modifiableStats.push({ key: key, value: val, type: "number" });
-					statModifiers[key] = { value: { min: 0, max: 100 } };
-				}
-				else {
-					let val = value;
-					if (typeof val == "string") {
-						// variable is a string
-						if (typeof stringValues[key] != "undefined") {
-							if (stringValues[key].length > 1) {
-								//console.log(`${key}: ${val}: ${typeof val}`);
-								modifiableStats.push({ key: key, value: val, type: "string" });
-							}
-						}
-					}
-				}
-			} catch (err) {
-				//console.log(`Error! ${key}: ${value}`);
-			}
-		}
-
-		for (let index = 0; index < modifiableStats.length; index++) {
-
-			let key = modifiableStats[index].key;
-			let value = modifiableStats[index].value;
-			let type = modifiableStats[index].type;
-
-			try {
-				childWindow.document.getElementById(key).value = value;
-				if (type == "number") {
-					childWindow.document.getElementById('text-' + key).innerText = value;
-				}
-				if (type == "boolean") {
-					childWindow.document.getElementById(key).checked = value;
-				}
-				if (type == "string") {
-					let selectElement = document.getElementById(key);
-					let val = selectElement.value;
-					let options = selectElement.options;
-
-					for (let i = 0; i < options.length; i++) {
-						let option = options[i];
-
-						if (option.value != val) {
-							option.removeAttribute("selected");
-						} else {
-							option.setAttribute("selected", "");
-						}
-					}
-                }
-			}
-			catch (err) {
-				//console.log(err, key, value);
-			}
-		}
-	}, 4000);
 }
+
+// every 2.5 seconds, update the existing table with the values found in the game stats. 
+// Sometimes the game will reset the stats, so this ensures the player always sees the latest values
+setInterval(function () {
+	// Clear the modifiableStats and statModifiers arrays
+	modifiableStats = [];
+	statModifiers = [];
+	for (const [key, value] of Object.entries(stats)) {
+		try {
+			if (typeof value == "boolean") {
+				let val = value;
+				modifiableStats.push({ key: key, value: val, type: "boolean" });
+			}
+			let val = parseInt(value);
+			if (Number.isNaN(val) == false) {
+				modifiableStats.push({ key: key, value: val, type: "number" });
+				statModifiers[key] = { value: { min: 0, max: 100 } };
+			}
+			else {
+				let val = value;
+				if (typeof val == "string") {
+					// variable is a string
+					if (typeof stringValues[key] != "undefined") {
+						if (stringValues[key].length > 1) {
+							modifiableStats.push({ key: key, value: val, type: "string" });
+						}
+					}
+				}
+			}
+		} catch (err) {
+			console.log(`Error! ${key}: ${value}`);
+		}
+	}
+
+	for (let index = 0; index < modifiableStats.length; index++) {
+
+		let key = modifiableStats[index].key;
+		let value = modifiableStats[index].value;
+		let type = modifiableStats[index].type;
+
+		try {
+			childWindow.document.getElementById(key).value = value;
+			if (type == "number") {
+				childWindow.document.getElementById('text-' + key).innerText = value;
+			}
+			if (type == "boolean") {
+				childWindow.document.getElementById(key).checked = value;
+			}
+			if (type == "string") {
+				let selectElement = childWindow.document.getElementById(key);
+				let val = selectElement.value;
+				let options = selectElement.options;
+
+				for (let i = 0; i < options.length; i++) {
+					let option = options[i];
+
+					if (option.value != val) {
+						option.removeAttribute("selected");
+					} else {
+						option.setAttribute("selected", "");
+					}
+				}
+			}
+		} catch (error) {
+			if (error instanceof ReferenceError) {
+				// Error: childWindow is not defined
+			} else {
+				// Other errors
+				console.log(error);
+			}
+		}
+	}
+}, 3000);
