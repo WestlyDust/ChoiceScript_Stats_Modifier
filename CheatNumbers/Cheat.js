@@ -1,4 +1,5 @@
 // Define the callback function to call when a change occurs
+
 function handleStatsChange() {
 	updateStats();
 }
