@@ -1,7 +1,7 @@
 let sceneList = stats.scene.nav._sceneList;
 
 let url = window.location.href;
-const baseURL = url.replace("index.html", "");
+let baseURL = url.replace(/(index\.html$|mygame\/$)/, '');
 
 let stringValues = {};
 
