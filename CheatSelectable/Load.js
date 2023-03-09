@@ -8,7 +8,7 @@ function injectScript(src) {
     });
 }
 
-injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatSelectable/Startup.js')
+injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatSelectable/Initialize.js')
     .then(() => {
         console.log('Initialized');
     }).catch(error => {
