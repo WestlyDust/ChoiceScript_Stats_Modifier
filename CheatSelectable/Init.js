@@ -80,13 +80,14 @@ let statModifiers = [];
 // Create the dropdown and load button
 const dropdown = document.createElement('select');
 dropdown.innerHTML = `
-    <option value="https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatNumbers/Cheat.js">Nums</option>
-    <option value="https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatNumbers%26Booleans/Cheat.js">Nums&Bools</option>
-    <option value="https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatNumbers%26Booleans%26Strings/Cheat.js">Nums&Bools&Strs</option>
+    <option value="https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatSelectable/Cheats/CheatN.js">Nums</option>
+    <option value="https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatSelectable/Cheats/CheatNB.js">Nums&Bools</option>
+    <option value="https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatSelectable/Cheats/CheatNBS.js">Nums&Bools&Strs</option>
 `;
 const loadButton = document.createElement('button');
 loadButton.textContent = 'Select';
-dropdown.style.height = `${loadButton.offsetHeight}px`;
+dropdown.style.height = '1.8em';
+dropdown.style.marginLeft = '1.5em';
 dropdown.classList.add('spacedLink', 'spacedLink--left');
 loadButton.classList.add('spacedLink', 'spacedLink--right');
 const btns = document.getElementById('buttons');

@@ -8,7 +8,7 @@ function injectScript(src) {
     });
 }
 
-injectScript('Init.js')
+injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatSelectable/Init.js')
     .then(() => {
         console.log('Initialized');
     }).catch(error => {
