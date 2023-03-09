@@ -12,8 +12,8 @@ To avoid running into issues, I highly recommend viewing the game's code before 
      - Make sure you've begun the game and are not on a side page (like the stats page)
 3. Open the developer console -> (right click, inspect, console)
 4. Paste Load.js code in the console and press enter
-5. The cheats button should appear on the game screen
-6. Clicking the button should open the Cheat window where you can now modify the game stats
+5. The Modify Stats button should appear on the game screen
+6. Clicking Modify Stats should open the Cheat window where you can now modify the game stats
 7. After changing the desired stats, close the window, and click next to progress the game
      - Going to any other page, like the stats page, will undo stats modifications
 
