@@ -1,4 +1,4 @@
-![image](https://user-images.githubusercontent.com/93689946/222035758-f3e8ea30-7970-445e-8e23-d7573860b186.png)
+![T1](https://user-images.githubusercontent.com/93689946/223911560-d7e72a68-1aa2-44cc-a3e3-b8d692bd5cf5.jpg)
 # IMPORTANT
 **Do _NOT_ send feedback or reports to ChoiceOfGames Support if you run into an error or your game crashes while using cheats.** Feedback and reports are intended to debug **REAL** issues with the game, not problems resulting from modified stats and cheating.
 
@@ -26,7 +26,7 @@ To avoid running into issues, I highly recommend viewing the game's code before 
 ### [Load.js - All of the Above](https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/Main/CheatSelectable/Load.js)
 * Modify the available options as you play
 
-![O2](https://user-images.githubusercontent.com/93689946/223906310-6dc5507c-6e80-44ea-b64e-75c1d5b12e82.jpg)
+![O1](https://user-images.githubusercontent.com/93689946/223909666-c178f82c-cb16-4f38-9843-816b7eca91e0.jpg)
 
 ## Credit
 Big thanks to JohnTheRedeemer for letting me build off his work - you can find the original code I based this off of here: https://github.com/JohnTheRedeemer/ChoiceScript_Modifier
