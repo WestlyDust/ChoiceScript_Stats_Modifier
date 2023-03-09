@@ -100,6 +100,7 @@ dropdown.addEventListener('change', () => {
     // Remove the previously injected script, if there is one
     if (scriptElement) {
         scriptElement.remove();
+        cheatButton.remove();
         scriptElement = null;
     }
 });
