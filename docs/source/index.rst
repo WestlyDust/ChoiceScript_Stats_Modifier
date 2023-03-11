@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to ChoiceScript Stats's documentation!
-=============================================
+ChoiceScript Stats Modifier
+===========================
 
 .. toctree::
    :maxdepth: 2

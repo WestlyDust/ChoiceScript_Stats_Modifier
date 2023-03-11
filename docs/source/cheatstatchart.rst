@@ -7,9 +7,6 @@ Load.js - Stat Chart
 --------------------
 
 This cheat sheet allows you to modify numerical game data.
-.. details::
-   :summary: Load.js
-
    .. code-block:: javascript
 
     function injectScript(src) {

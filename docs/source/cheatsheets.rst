@@ -7,9 +7,6 @@ Load.js - Numbers
 -----------------
 
 This cheat sheet allows you to modify numerical game data.
-.. details::
-   :summary: Load.js
-
    .. code-block:: javascript
 
     function injectScript(src) {
@@ -33,9 +30,6 @@ Load.js - Numbers and Booleans
 ------------------------------
 
 This cheat sheet allows you to modify numerical and boolean game data.
-.. details::
-   :summary: Load.js
-
    .. code-block:: javascript
 
     function injectScript(src) {
@@ -59,9 +53,6 @@ Load.js - Numbers, Booleans, and Strings
 ----------------------------------------
 
 This cheat sheet allows you to modify numerical, boolean, and string game data.
-.. details::
-   :summary: Load.js
-
    .. code-block:: javascript
 
     function injectScript(src) {
