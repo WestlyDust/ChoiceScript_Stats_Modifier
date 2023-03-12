@@ -5,12 +5,13 @@ version: 2
 # You can also use "latest" or other version numbers.
 build:
   image: latest
+  
+sphinx:
+  configuration: docs/conf.py
 
 # Set up the Python environment
 python:
-  version: 3.8
-  packages:
-    # Install Sphinx and the Alabaster theme
+  install:
     - Sphinx
     - sphinx_rtd_theme
     - sphinx_copybutton
@@ -20,7 +21,5 @@ python:
 docs:
   requiremets_file: requirements.txt
   path: docs
-  # Use the Sphinx builder to build the documentation
   builder: sphinx
-  # Set the Sphinx configuration file
   configuration: docs/conf.py
