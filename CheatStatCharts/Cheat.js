@@ -89,7 +89,6 @@ function updateStats() {
 						else {
 							modifiableStats.push({ key: key, value: val, statType: "boolean", displayType: stat.type, label: stat.label });
 						}
-						console.log(`Boolean! ${key}: ${value}`);
 					}
 					let val = parseInt(value);
 					if (Number.isNaN(val) == false) {
@@ -100,7 +99,6 @@ function updateStats() {
 						else {
 							modifiableStats.push({ key: key, value: val, statType: "number", displayType: stat.type, label: stat.label });
 						}
-						console.log(`Number! ${key}: ${value}`);
 					}
 					else {
 						let val = value;
@@ -113,7 +111,6 @@ function updateStats() {
 								modifiableStats.push({ key: key, value: val, statType: "string", displayType: stat.type, label: stat.label });
 							}
 						}
-						console.log(`String! ${key}: ${value}`);
 					}
 				} catch (err) {
 					console.log(err);
@@ -253,7 +250,6 @@ setInterval(function () {
 						else {
 							modifiableStats.push({ key: key, value: val, statType: "boolean", displayType: stat.type, label: stat.label });
 						}
-						console.log("boolean: " + key + " = " + value);
 					}
 					let val = parseInt(value);
 					if (Number.isNaN(val) == false) {
@@ -264,7 +260,6 @@ setInterval(function () {
 						else {
 							modifiableStats.push({ key: key, value: val, statType: "number", displayType: stat.type, label: stat.label });
 						}
-						console.log("number: " + key + " = " + value);
 					}
 					else {
 						let val = value;
@@ -277,7 +272,6 @@ setInterval(function () {
 								modifiableStats.push({ key: key, value: val, statType: "string", displayType: stat.type, label: stat.label });
 							}
 						}
-						console.log("string: " + key + " = " + value);
 					}
 				} catch (err) {
 					console.log(`Error! ${key}: ${value}`);
@@ -298,12 +292,10 @@ setInterval(function () {
 			try {
 				if (displayType == "opposed_pair") {
 					let opposedKey = modifiableStats[index].opposedKey;
-					// console.log("In opposed pair -> value: " + value, ", key: " + key, ", opposedKey: ", opposedKey, " element: ", element);
 					childWindow.document.getElementById(key).textContent = parseInt(value);
 					childWindow.document.getElementById(opposedKey).textContent = (100 - parseInt(value));
 				}
 				if (displayType == "percent") {
-					// console.log("In percent -> value: " + value, ", key: " + key, ", element: ", element);
 					childWindow.document.getElementById(key).textContent = parseInt(value);
 				}
 				if (displayType == "text") {
