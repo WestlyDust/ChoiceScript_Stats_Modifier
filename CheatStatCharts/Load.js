@@ -8,7 +8,7 @@ function injectScript(src) {
     });
 }
 
-injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatStatCharts/Cheat.js')
+injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatStatCharts/Chart.js')
     .then(() => {
         console.log('Cheats loaded!');
         var btns = document.getElementById("buttons");
