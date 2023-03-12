@@ -9,11 +9,6 @@ build:
 sphinx:
   configuration: docs/conf.py
 
-# Set up the Python environment
-python:
-  install:
-    - sphinx_copybutton
-
 # Set up the documentation build
 # This assumes that your documentation is in a folder called "docs"
 docs:
