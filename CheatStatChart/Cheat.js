@@ -89,9 +89,10 @@ function updateStats() {
 						else {
 							modifiableStats.push({ key: key, value: val, statType: "boolean", displayType: stat.type, label: stat.label });
 						}
+						console.log(`Boolean! ${key}: ${value}`);
 					}
-					else if (Number.isNaN(value) == false) {
-						let val = parseInt(value);
+					let val = parseInt(value);
+					if (Number.isNaN(val) == false) {
 						if (stat.type == "opposed_pair") {
 							let opposedKey = stat.opposed_label.toLowerCase();
 							modifiableStats.push({ key: key, opposedKey: opposedKey, value: val, statType: "number", displayType: stat.type, label: stat.label, opposedLabel: stat.opposed_label});
@@ -99,6 +100,7 @@ function updateStats() {
 						else {
 							modifiableStats.push({ key: key, value: val, statType: "number", displayType: stat.type, label: stat.label });
 						}
+						console.log(`Number! ${key}: ${value}`);
 					}
 					else {
 						let val = value;
@@ -111,6 +113,7 @@ function updateStats() {
 								modifiableStats.push({ key: key, value: val, statType: "string", displayType: stat.type, label: stat.label });
 							}
 						}
+						console.log(`String! ${key}: ${value}`);
 					}
 				} catch (err) {
 					console.log(err);
@@ -250,9 +253,10 @@ setInterval(function () {
 						else {
 							modifiableStats.push({ key: key, value: val, statType: "boolean", displayType: stat.type, label: stat.label });
 						}
+						console.log("boolean: " + key + " = " + value);
 					}
-					else if (Number.isNaN(value) == false) {
-						let val = parseInt(value);
+					let val = parseInt(value);
+					if (Number.isNaN(val) == false) {
 						if (stat.type == "opposed_pair") {
 							let opposedKey = stat.opposed_label.toLowerCase();
 							modifiableStats.push({ key: key, opposedKey: opposedKey, value: val, statType: "number", displayType: stat.type, label: stat.label, opposedLabel: stat.opposed_label});
@@ -260,6 +264,7 @@ setInterval(function () {
 						else {
 							modifiableStats.push({ key: key, value: val, statType: "number", displayType: stat.type, label: stat.label });
 						}
+						console.log("number: " + key + " = " + value);
 					}
 					else {
 						let val = value;
@@ -272,6 +277,7 @@ setInterval(function () {
 								modifiableStats.push({ key: key, value: val, statType: "string", displayType: stat.type, label: stat.label });
 							}
 						}
+						console.log("string: " + key + " = " + value);
 					}
 				} catch (err) {
 					console.log(`Error! ${key}: ${value}`);
