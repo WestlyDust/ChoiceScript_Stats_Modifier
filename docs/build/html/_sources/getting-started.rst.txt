@@ -1,0 +1,14 @@
+Getting Started
+===============
+
+This tool allows you to select which game data types you want to modify during gameplay.
+
+To use the Cheat Selectable tool, follow these steps:
+
+1. Start the game and navigate to the cheat menu.
+
+2. Use the dropdown menu to select which game data types you want to modify.
+
+3. Modify the game data as desired.
+
+4. Save your changes and enjoy your boosted gameplay!

@@ -1,1 +1,85 @@
-/* This file intentionally left blank. */
+ul, ol {
+  /* Matches the 30px from the narrow-screen "li > ul" selector below */
+  margin: 5px 0 10px 30px;
+  padding: 0;
+}
+
+div.sidebar,
+aside.sidebar {
+    margin: 0.5em 0.5em 0.5em 0.5em;
+    border: 1px solid rgb(224, 224, 224);
+    padding: 10px;
+    background-color: rgb(240, 240, 240);
+    width: 100%;
+    float: none;
+    clear: right;
+    overflow-x: auto;
+}
+
+p.sidebar-title {
+  margin-top: 5px;
+  margin-bottom: 2px;
+  font-weight: bold;
+}
+
+dl dd {
+  margin-left: 5px;
+}
+dl {
+  margin-bottom: 0;
+}
+blockquote {
+  margin: 0 0 0 0
+}
+.highlight .w {
+  color: #EEE;
+  text-decoration: none;
+}
+div.sphinxsidebar {
+  background-color: #EEE;
+}
+div.documentwrapper {
+  width: 100%;
+}
+div.document {
+  display: flex;
+  align-content: center;
+}
+
+#text div.sidebar,
+aside.sidebar {
+  font-style: italic;
+}
+
+ol.simple p {
+  font-style: normal;
+}
+
+a.reference.internal {
+  font-style: normal;
+}
+
+div.body li p {
+  margin-bottom: 0.1em;
+}
+
+li::marker {
+  font-weight: bold;
+  font-style: normal;
+}
+
+html body div.document div.documentwrapper div.bodywrapper div.body section#choicescript-stats-modifier section#getting-started aside.sidebar ol.arabic.simple li dl.simple dt {
+  font-style: normal;
+}
+
+html body div.document div.documentwrapper div.bodywrapper div.body section#choicescript-stats-modifier section#getting-started aside.sidebar ol.arabic.simple li {
+  margin-bottom: 0.7em;
+}
+
+dd {
+  margin-top: 0;
+}
+
+html body div.document div.documentwrapper div.bodywrapper div.body section#stat-chart div.my-container-class.docutils.container figure.align-left {
+  margin-right: 20em;
+}
