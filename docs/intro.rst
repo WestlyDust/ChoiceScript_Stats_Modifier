@@ -1,11 +1,13 @@
-.. ChoiceScriptStats documentation master file, created by
-   sphinx-quickstart on Sat Mar 11 16:54:07 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+..  include:: /Includes.rst.txt
+..  highlight:: rst
+..  index:: reST; Sidebar
+
+..  _rest-intro:
 
 ChoiceScript Stats Modifier
 ===========================
 
+..  _rest-notes:
 
 Important Notes
 ---------------
@@ -15,6 +17,7 @@ Important Notes
 
 To avoid running into issues, I highly recommend viewing the game's code before modifying any stats - especially if you plan on using *Load.js - Numbers, Booleans, and Strings*, as it's the most complex option.
 
+..  _rest-getting-started:
 
 Getting Started
 ---------------
@@ -38,6 +41,8 @@ Getting Started
         - Going to any other page, like the stats page, will undo stats modifications
 
 
+..  _rest-tools:
+
 Stat Modifier Tools
 -------------------
 
@@ -52,14 +57,7 @@ Stat Modifier Tools
 
     :ref:`Selectable <rest-selectable>` - Modify numerical, boolean, or string stats using a dropdown menu and spreadsheet-like interface.
 
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-
-   intro.rst
-   cheatstatcharts.rst
-   cheatselectable.rst
-   cheatsheets.rst
+..  _rest-credit:
 
 Credit
 ------
