@@ -4,7 +4,7 @@ version: 2
 # Set the build environment to Ubuntu 18.04
 # You can also use "latest" or other version numbers.
 build:
-  image: ubuntu-18.04
+  image: latest
 
 # Set up the Python environment
 python:
