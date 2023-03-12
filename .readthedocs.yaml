@@ -1,0 +1,26 @@
+# .readthedocs.yaml
+version: 2
+
+# Set the build environment to Ubuntu 18.04
+# You can also use "latest" or other version numbers.
+build:
+  image: ubuntu-18.04
+
+# Set up the Python environment
+python:
+  version: 3.8
+  pip:
+    # Install Sphinx and the Alabaster theme
+    - Sphinx
+    - sphinx_rtd_theme
+    - sphinx_copybutton
+
+# Set up the documentation build
+# This assumes that your documentation is in a folder called "docs"
+docs:
+  requiremets_file: requirements.txt
+  path: docs
+  # Use the Sphinx builder to build the documentation
+  builder: sphinx
+  # Set the Sphinx configuration file
+  configuration: docs/conf.py
