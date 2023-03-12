@@ -12,7 +12,6 @@ sphinx:
 # Set up the Python environment
 python:
   install:
-    - sphinx_rtd_theme
     - sphinx_copybutton
 
 # Set up the documentation build
