@@ -9,7 +9,7 @@ build:
 # Set up the Python environment
 python:
   version: 3.8
-  pip:
+  packages:
     # Install Sphinx and the Alabaster theme
     - Sphinx
     - sphinx_rtd_theme
