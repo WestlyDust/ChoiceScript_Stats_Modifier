@@ -1,1 +1,2 @@
-# Click [Here](https://choicescript-stats-modifier.readthedocs.io/en/latest/) to get started
+# Welcome to the ChoiceScript Stats Modifier Tool
+## Click [Here](https://choicescript-stats-modifier.readthedocs.io/en/latest/) to get started
