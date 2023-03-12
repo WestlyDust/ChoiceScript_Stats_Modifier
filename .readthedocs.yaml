@@ -1,18 +1,12 @@
 # .readthedocs.yaml
 version: 2
 
-# Set the build environment to Ubuntu 18.04
-# You can also use "latest" or other version numbers.
 build:
   image: latest
   
 sphinx:
   configuration: docs/conf.py
 
-# Set up the documentation build
-# This assumes that your documentation is in a folder called "docs"
-docs:
-  requiremets_file: requirements.txt
-  path: docs
-  builder: sphinx
-  configuration: docs/conf.py
+python:
+  install:
+    - requirements: docs/requirements.txt
