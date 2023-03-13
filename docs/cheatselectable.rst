@@ -33,8 +33,6 @@ Load.js - Selectable
     injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatSelectable/InitCheats.js')
         .then(() => {
             console.log('Initialized');
-            var btns = document.getElementById("buttons");
-            btns.innerHTML = btns.innerHTML + "<button id='cheatButton' class='spacedLink' onclick='loadCheats()'>Modify Stats</button>";
         }).catch(error => {
             console.error(error);
     });
