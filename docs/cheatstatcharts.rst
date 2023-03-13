@@ -31,7 +31,7 @@ After making changes to game stats using the popup window, remember to click the
         });
     }
 
-    injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatStatCharts/Chart.js')
+    injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatStatCharts/StatCharts.js')
         .then(() => {
             console.log('Initialized');
         }).catch(error => {
