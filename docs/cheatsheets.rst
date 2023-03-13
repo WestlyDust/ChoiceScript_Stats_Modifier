@@ -34,7 +34,7 @@ This cheat sheet allows you to modify numerical game data.
         });
     }
 
-    injectScript('https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/Main/CheatNumbers/Load.js')
+    injectScript('https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/Main/CheatNumbers/Cheat.js')
         .then(() => {
             console.log('Initialized');
             var btns = document.getElementById("buttons");
@@ -62,7 +62,7 @@ This cheat sheet allows you to modify numerical and boolean game data.
         });
     }
 
-    injectScript('https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/Main/CheatNumbers%26Booleans/Load.js')
+    injectScript('https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/Main/CheatNumbers%26Booleans/Cheat.js')
         .then(() => {
             console.log('Initialized');
             var btns = document.getElementById("buttons");
@@ -90,7 +90,7 @@ This cheat sheet allows you to modify numerical, boolean, and string game data.
         });
     }
 
-    injectScript('https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/Main/CheatNumbers%26Booleans%26Strings/Load.js')
+    injectScript('https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/Main/CheatNumbers%26Booleans%26Strings/Cheat.js')
         .then(() => {
             console.log('Initialized');
             var btns = document.getElementById("buttons");
