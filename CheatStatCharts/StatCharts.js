@@ -1,54 +1,124 @@
-function StatScene(name, s, nav, options) {
-    Scene.call(this, name, s, nav, options);
-    this.name = name;
-    this.s = s;
-    this.nav = nav;
-    this.options = options;
-}
+let sceneList = stats.scene.nav._sceneList;
 
-StatScene.prototype = Object.create(Scene.prototype);
-StatScene.prototype.constructor = StatScene;
+let url = window.location.href;
+let baseURL = url.replace(/(index\.html$|mygame\/$)/, '');
 
-StatScene.prototype.loadFile = function loadFile() {}
-StatScene.prototype.restore_purchases = function scene_restorePurchases(data) {}
-StatScene.prototype.buyButton = function(product, priceGuess, label, title) {}
-StatScene.prototype.link_button = function linkButton(data) {}
-StatScene.prototype.more_games = function more_games(now) {}
-StatScene.prototype.login = function scene_login(optional) {}
-StatScene.prototype.save_game = function save_game(destinationSceneName) {}
-StatScene.prototype.timer = function(dateString) {}
-StatScene.prototype.delay_break = function(durationInSeconds) {}
-StatScene.prototype.line_break = function line_break() {}
-StatScene.prototype.image = function image(data, invert) {}
-StatScene.prototype.youtube = function youtube(slug) {}
-StatScene.prototype.sound = function sound(source) {}
-StatScene.prototype.link = function link(data) {}
-StatScene.prototype.link_button = function linkButton(data) {}
-StatScene.prototype.printLine = function printLine(line) {}
-StatScene.prototype.dedent = function dedent(newDent) {};
-StatScene.prototype.finish = function finish(buttonName) {}
-StatScene.prototype.page_break = function page_break(buttonName) {}
-StatScene.prototype.renderOptions = function renderOptions(groups, options, callback) {}
-StatScene.prototype.parseOptions = function parseOptions(startIndent, choicesRemaining, expectedSubOptions) {}
-StatScene.prototype.parseOptionIf = function parseOptionIf(data) {}
+let stringValues = {};
+const statCharts = [];
 
-let chartPromise = new Promise(function(resolve) {
-	const trueScene = stats.scene;
-	let tempStats = stats;
-	let chart = [];
-	StatScene.prototype.stat_chart = function stat_chart() {
-		this.paragraph();
-    	var rows = this.parseStatChart();
-    	for (i = 0; i < rows.length; i++) {
-			var row = rows[i];
-			row.variable = row.variable.toLowerCase();
-			chart.push(row);
-    	}
-		resolve(chart);
-	}
-	let statScene = new StatScene("choicescript_stats", tempStats, this.nav, {secondaryMode:"", saveSlot:""});
-	statScene.execute();
-	stats.scene = trueScene;
+let currentLine = "";
+
+let sceneFiles = sceneList.map(function (sceneName) {
+	return sceneName + ".txt";
+});
+
+let chartPromise = new Promise(function(resolve) {	
+	// Load the scene file content
+	let statsURL = baseURL + "mygame/scenes/choicescript_stats.txt";
+	
+	fetch(statsURL)
+		.then(response => {
+			if (!response.ok) {
+				throw new Error("Network response was not ok");
+			}
+			return response.text();
+		})
+		.then(text => {
+			// Split the scene file content into lines
+			let tempStatCharts = [];
+			let lines = text.split(/\r?\n/);
+
+			let i = 0;
+			while (i < lines.length) {
+				let line = lines[i];
+				if (line.startsWith('*stat_chart')) {
+					let tempStatChart = [];
+					let firstIndent = line.search(/\S|$/);
+					i++;
+					while (i < lines.length) {
+						let nextLine = lines[i];
+						let nextIndent = nextLine.search(/\S|$/);
+
+						if (nextIndent > firstIndent) {
+							tempStatChart.push(nextLine);
+							i++;
+						} else {
+							break;
+						}
+					}
+					tempStatCharts.push(tempStatChart);
+				} else {
+					i++;
+				}
+			}
+			for (let tempStatChart of tempStatCharts) {
+				let stat = {};
+
+				for (let i = 0; i < tempStatChart.length; i++) {
+					let line = tempStatChart[i];
+					let indent = line.search(/\S|$/);
+
+					let pieces = line.trim().split(' ');
+					let type = pieces[0];
+					let variable = pieces[1];
+					let label = '';
+						
+					if(type == 'text') {
+						if(pieces.length > 2) {
+							label = line.substring(line.indexOf(pieces[2])).trim();
+							variable = variable.toLowerCase();
+						}
+						else {
+							label = variable;
+							variable = variable.toLowerCase();
+						}
+						stat = {type, variable, label};
+						statCharts.push(stat);
+					}
+					else if(type == 'percent') {
+						if(pieces.length > 2) {
+							label = line.substring(line.indexOf(pieces[2])).trim();
+							variable = variable.toLowerCase();
+						}
+						else {
+							label = variable;
+							variable = variable.toLowerCase();
+						}
+						stat = {type, variable, label};
+						statCharts.push(stat);
+					}
+					else if(type == 'opposed_pair') {
+						let nextLine = tempStatChart[i + 1];
+						let nextNextLine = tempStatChart[i + 2];
+						let twoLabels = nextNextLine && nextNextLine.search(/\S|$/) > indent;
+						let opposed_label = '';
+						if(twoLabels) {
+							label = nextLine.trim();
+							opposed_label = nextNextLine.trim();
+							variable = variable.toLowerCase();
+							i += 2;
+						} else {
+							label = variable;
+							opposed_label = nextLine.trim();
+							variable = variable.toLowerCase();
+							i++;
+						}
+						stat = {type, variable, label, opposed_label};
+						statCharts.push(stat);
+					}
+					else {
+						console.log('Error: Invalid display type');
+					}
+				}
+			}
+			for(let statChart of statCharts) {
+				console.log(statChart);
+			}
+		})
+		.catch(error => {
+			console.error("Error:", error);
+		});
+	resolve(statCharts);
 });
 
 let modifiableStats = [];
@@ -69,17 +139,32 @@ stats = statsProxy;
 function handleStatsChange() {
 	updateStats();
 }
-
 // Function to update the modifiableStats and statModifiers arrays
 function updateStats() {
-	chartPromise.then(function(chart) {
+	chartPromise.then(function(statCharts) {
+		let statKeyValues = Object.entries(stats);
 		// Clear the modifiableStats array
 		modifiableStats = [];
 		// compile all the stats
-		for (const [key, value] of Object.entries(stats)) {
-			let stat = chart.find(stat => stat.variable == key);
+		for (const [key, value] of statKeyValues) {
+			let stat = statCharts.find(stat => stat.variable == key);
 			if(stat !== undefined) {
 				try {
+					let regexMatcher = /\$\{(.+?)\}/;
+					let match = regexMatcher.exec(stat.label);
+					let x = match ? match[1] : null;
+					console.log(`Matched string: ${x}`);
+					let regex = new RegExp(`\\$\\{\\s*(${x})\\s*\\}`, 'g'); // match `${key}` syntax and capture the variable name
+					console.log(`Regular expression: ${regex}`);
+					stat.label = stat.label.replace(regex, (_, x) => {
+						let variableValue = statKeyValues.find(([k, v]) => k == x)?.[1];
+						if (variableValue == undefined) {
+							return ''; // replace with an empty string
+						} else {
+							return variableValue; // replace with the value from the stats object
+						}
+					}).trim();
+					console.log(`Replaced string: ${stat.label}`);
 					if (typeof value == "boolean") {
 						let val = value;
 						if (stat.type == "opposed_pair") {
@@ -234,13 +319,26 @@ function loadCheats() {
 // every 2.5 seconds, update the existing table with the values found in the game stats. 
 // Sometimes the game will reset the stats, so this ensures the player always sees the latest values
 setInterval(function () {
-	chartPromise.then(function(chart) {
+	chartPromise.then(function(statCharts) {
+		let statKeyValues = Object.entries(stats);
 		// Clear the modifiableStats array
 		modifiableStats = [];
-		for (const [key, value] of Object.entries(stats)) {
-			let stat = chart.find(stat => stat.variable == key);
+		for (const [key, value] of statKeyValues) {
+			let stat = statCharts.find(stat => stat.variable == key);
 			if(stat !== undefined) {
 				try {
+					let regexMatcher = /\$\{(.+?)\}/;
+					let match = regexMatcher.exec(stat.label);
+					let x = match ? match[1] : null;
+					let regex = new RegExp(`\\$\\{\\s*(${x})\\s*\\}`, 'g'); // match `${key}` syntax and capture the variable name
+					stat.label = stat.label.replace(regex, (_, x) => {
+						let variableValue = statKeyValues.find(([k, v]) => k == x)?.[1];
+						if (variableValue == undefined) {
+							return ''; // replace with an empty string
+						} else {
+							return variableValue; // replace with the value from the stats object
+						}
+					}).trim();
 					if (typeof value == "boolean") {
 						let val = value;
 						if (stat.type == "opposed_pair") {
