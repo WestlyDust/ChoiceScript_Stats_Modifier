@@ -19,23 +19,8 @@ This tool creates a popup window that emulates the in-game stats page, allowing 
 
 After making changes to game stats using the popup window, remember to click the "Next" button to ensure that changes are saved. If you go to a different page, such as the stats page, the game will revert to its previous stats.
 
-   .. code-block:: javascript
+.. literalinclude:: /_static/code/CheatStatCharts/CheatStatCharts.js
+    :class: myCodeBlock
+    :language: javascript
 
-    function injectScript(src) {
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = src;
-            script.addEventListener('load', resolve);
-            script.addEventListener('error', e => reject(e.error));
-            document.head.appendChild(script);
-        });
-    }
-
-    injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatStatCharts/CheatStatCharts.js')
-        .then(() => {
-            console.log('Initialized');
-            var btns = document.getElementById("buttons");
-            btns.innerHTML = btns.innerHTML + "<button id='cheatButton' class='spacedLink' onclick='loadCheats()'>Modify Stats</button>";
-        }).catch(error => {
-            console.error(error);
-    });
+Files to create a Chrome extension: :download:`Download.zip </_static/zip/CheatStatCharts.zip>`.

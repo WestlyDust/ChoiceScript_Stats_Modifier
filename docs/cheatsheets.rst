@@ -22,79 +22,28 @@ Load.js - Numbers
 
 This cheat sheet allows you to modify numerical game data.
 
-   .. code-block:: javascript
+.. literalinclude:: /_static/code/CheatSelectable/CheatN.js
+    :class: myCodeBlock
+    :language: javascript
 
-    function injectScript(src) {
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = src;
-            script.addEventListener('load', resolve);
-            script.addEventListener('error', e => reject(e.error));
-            document.head.appendChild(script);
-        });
-    }
+..  _rest-cheatsheets-b:
 
-    injectScript('https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/Main/CheatNumbers/Cheat.js')
-        .then(() => {
-            console.log('Initialized');
-            var btns = document.getElementById("buttons");
-            btns.innerHTML = btns.innerHTML + "<button id='cheatButton' class='spacedLink' onclick='loadCheats()'>Modify Stats</button>";
-        }).catch(error => {
-            console.error(error);
-    });
-
-..  _rest-cheatsheets-nb:
-
-Load.js - Numbers and Booleans
+Load.js - Booleans
 ------------------------------
 
-This cheat sheet allows you to modify numerical and boolean game data.
+This cheat sheet allows you to modify boolean game data.
 
-   .. code-block:: javascript
+.. literalinclude:: /_static/code/CheatSelectable/CheatB.js
+    :class: myCodeBlock
+    :language: javascript
 
-    function injectScript(src) {
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = src;
-            script.addEventListener('load', resolve);
-            script.addEventListener('error', e => reject(e.error));
-            document.head.appendChild(script);
-        });
-    }
+..  _rest-cheatsheets-s:
 
-    injectScript('https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/Main/CheatNumbers%26Booleans/Cheat.js')
-        .then(() => {
-            console.log('Initialized');
-            var btns = document.getElementById("buttons");
-            btns.innerHTML = btns.innerHTML + "<button id='cheatButton' class='spacedLink' onclick='loadCheats()'>Modify Stats</button>";
-        }).catch(error => {
-            console.error(error);
-    });
-
-..  _rest-cheatsheets-nbs:
-
-Load.js - Numbers, Booleans, and Strings
+Load.js - Strings
 ----------------------------------------
 
-This cheat sheet allows you to modify numerical, boolean, and string game data.
+This cheat sheet allows you to modify string game data.
 
-   .. code-block:: javascript
-
-    function injectScript(src) {
-        return new Promise((resolve, reject) => {
-            const script = document.createElement('script');
-            script.src = src;
-            script.addEventListener('load', resolve);
-            script.addEventListener('error', e => reject(e.error));
-            document.head.appendChild(script);
-        });
-    }
-
-    injectScript('https://raw.githubusercontent.com/WestlyDust/ChoiceScript_Stats_Modifier/Main/CheatNumbers%26Booleans%26Strings/Cheat.js')
-        .then(() => {
-            console.log('Initialized');
-            var btns = document.getElementById("buttons");
-            btns.innerHTML = btns.innerHTML + "<button id='cheatButton' class='spacedLink' onclick='loadCheats()'>Modify Stats</button>";
-        }).catch(error => {
-            console.error(error);
-    });
+.. literalinclude:: /_static/code/CheatSelectable/CheatS.js
+    :class: myCodeBlock
+    :language: javascript

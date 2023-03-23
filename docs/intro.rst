@@ -52,8 +52,8 @@ Stat Modifier Tools
 
     :ref:`Sheets <rest-cheatsheets>` - Modify stats using a spreadsheet-like interface.
         * :ref:`Numbers <rest-cheatsheets-n>` - Modify numerical stats.
-        * :ref:`Numbers and Booleans <rest-cheatsheets-nb>` - Modify numerical and boolean stats.
-        * :ref:`Numbers, Booleans, and Strings <rest-cheatsheets-nbs>` - Modify numerical, boolean, and string stats.
+        * :ref:`Booleans <rest-cheatsheets-b>` - Modify boolean stats.
+        * :ref:`Strings <rest-cheatsheets-s>` - Modify string stats.
 
     :ref:`Selectable <rest-selectable>` - Modify numerical, boolean, or string stats using a dropdown menu and spreadsheet-like interface.
 

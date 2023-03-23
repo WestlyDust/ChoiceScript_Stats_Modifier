@@ -17,7 +17,6 @@ After making changes to game stats using the popup window, remember to click the
 
 Load.js - Selectable
 --------------------
-
-    .. literalinclude:: /_static/code/CheatSelectable/CheatsSelectable.js
-        :language: javascript
-        :emphasize-lines: 124-126
+.. literalinclude:: /_static/code/CheatSelectable/CheatsSelectable.js
+    :class: myCodeBlock
+    :language: javascript
