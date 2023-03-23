@@ -31,8 +31,8 @@ def add_zip_file(app):
     app.config.html_static_path = html_static_path + ['_static']
     app.config.html_static_path.append('zip')
     app.config.html_extra_path.append('zip')
-    app.add_stylesheet('custom.css')
-    app.add_javascript('custom.js')
+    app.app.add_css_file('custom.css')
+    app.add_js_file('custom.js')
 
 def setup(app):
     app.connect('builder-inited', add_zip_file)
