@@ -24,6 +24,19 @@ copybutton_prompt_text = "$"
 templates_path = ['_templates']
 exclude_patterns = []
 
+from sphinx.builders import html
+
+def add_zip_file(app):
+    html_static_path = app.config.html_static_path
+    app.config.html_static_path = html_static_path + ['_static']
+    app.config.html_static_path.append('zip')
+    app.config.html_extra_path.append('zip')
+    app.add_stylesheet('custom.css')
+    app.add_javascript('custom.js')
+
+def setup(app):
+    app.connect('builder-inited', add_zip_file)
+
 
 
 # -- Options for HTML output -------------------------------------------------
