@@ -89,15 +89,6 @@ function GenerateStatHtml() {
 	}
 	statHtml += '<button onclick="closeChildWindow()" style="margin-bottom: 1em;">Close Page</button></div>';
 
-	console.log("statPage");
-	statPage.forEach(element => {
-		console.log(element);
-	});
-	console.log("modifiableStats");
-	modifiableStats.forEach(element => {
-		console.log(element);
-	});
-
 	let statPageIndex = 0;
 	for (let index = 0; index < modifiableStats.length; index++) {
 
