@@ -247,7 +247,6 @@ function ParseFileText(text) {
 				let label = line.substring(0, line.indexOf('$')).trim().replace(/\W+$/, '');
 
 				line = type + ' ' + variable + ' ' + label;
-				console.log(line);
 				ParseStatChart([line]);
 			}
 			else {
