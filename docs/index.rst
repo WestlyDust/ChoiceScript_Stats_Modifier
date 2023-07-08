@@ -60,6 +60,8 @@ Stat Modifier Tools
    cheatstatcharts.rst
    cheatselectable.rst
    cheatsheets.rst
+   feedback.rst
+   changelog.rst
 
 Credit
 ------
