@@ -1,0 +1,12 @@
+clone:
+  depth: full
+pipelines:
+  default:
+    - step:
+        name: Sync GitHub Mirror
+        script:
+          - git remote add github https://github.com/WestlyDust/ChoiceScript_Stats_Modifier.git
+          - git remote -v
+          - git pull github Main
+          - git push -u origin Main
+          
