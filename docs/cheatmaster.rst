@@ -5,7 +5,7 @@ Cheat Master
 
 .. container:: my-container-class
 
-    .. figure:: /images/CheatMaster.pmg
+    .. figure:: /images/CheatMaster.png
         :width: 800px
         :figclass: align-left
         :align: left
