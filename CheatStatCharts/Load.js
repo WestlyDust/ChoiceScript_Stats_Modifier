@@ -8,11 +8,13 @@ function injectScript(src) {
     });
 }
 
-injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@Main/CheatStatCharts/CheatStatCharts.js')
+injectScript('https://cdn.jsdelivr.net/gh/WestlyDust/ChoiceScript_Stats_Modifier@latest/CheatStatCharts/CheatStatCharts.js')
     .then(() => {
         console.log('Cheats loaded!');
         var btns = document.getElementById("buttons");
-        btns.innerHTML = btns.innerHTML + "<button id='cheatButton' class='spacedLink' onclick='loadCheats()'>Modify Stats</button>";
+        if (document.getElementById("cheatButton") != null) {
+            btns.innerHTML = btns.innerHTML + "<button id='cheatButton' class='spacedLink' onclick='loadCheats()'>Modify Stats</button>";
+        }
     }).catch(error => {
         console.error(error);
     });

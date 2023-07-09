@@ -57,6 +57,7 @@ Stat Modifier Tools
    :hidden:
 
    intro.rst
+   cheatmaster.rst
    cheatstatcharts.rst
    cheatselectable.rst
    cheatsheets.rst

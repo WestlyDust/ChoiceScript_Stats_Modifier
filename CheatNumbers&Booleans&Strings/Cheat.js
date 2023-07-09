@@ -167,7 +167,6 @@ function loadCheats() {
 	html += '<table>';
 	html += '<tr><th>Skill</th>';
 	html += '<th>Limits</th>';
-	//html += '<th>Linked</th>';
 	html += '<th>Value</th>';
 	html += '</tr>';
 

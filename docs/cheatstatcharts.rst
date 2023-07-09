@@ -15,12 +15,11 @@ Stat Chart
 Load.js - Stat Chart
 --------------------
 
-This tool creates a popup window that emulates the in-game stats page, allowing you to modify game stats with ease.
+This tool creates a popup window that emulates the in-game stats page, allowing you to modify game stats with ease. It also includes options to edit numerical, boolean, and string stats.
 
 After making changes to game stats using the popup window, remember to click the "Next" button to ensure that changes are saved. If you go to a different page, such as the stats page, the game will revert to its previous stats.
 
-.. literalinclude:: /_static/code/CheatStatCharts/CheatStatCharts.js
+.. literalinclude:: /_static/code/CheatMaster/CheatMaster.js
     :class: myCodeBlock
     :language: javascript
 
-Files to create a Chrome extension: :download:`Download.zip </_static/zip/CheatStatCharts.zip>`.
