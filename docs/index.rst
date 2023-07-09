@@ -13,7 +13,7 @@ Important Notes
 
 *The following cheats allow you to modify a game's stats in ways the author did not intend, meaning it's very easy to break the game. If you do run into an error, simply hit cancel and restart the game from the beginning.*
 
-To avoid running into issues, I highly recommend viewing the game's code before modifying any stats - especially if you plan on using *Load.js - Numbers, Booleans, and Strings*, as it's the most complex option.
+To avoid running into issues, I highly recommend viewing the game's code before modifying any stats. This will give you a better idea of what you can and can't modify, and how to modify them.
 
 
 Getting Started
@@ -43,14 +43,14 @@ Stat Modifier Tools
 
 ..  sidebar::
 
-    :ref:`Stat Chart <rest-statchart>` - Modify stats using an interface similar to the one in-game.
+	:ref:`Cheat Master <rest-cheatmaster>` - Modify stats using an interface similar to the one in-game in addition to numerical, boolean, and string stats. The most comprehensive stat modifier.
 
-    :ref:`Sheets <rest-cheatsheets>` - Modify stats using a spreadsheet-like interface.
+    :ref:`Sheets <rest-cheatsheets>` - Modify specific stat types using a spreadsheet-like interface. Offers limited stat modification.
         * :ref:`Numbers <rest-cheatsheets-n>` - Modify numerical stats.
         * :ref:`Booleans <rest-cheatsheets-b>` - Modify boolean stats.
         * :ref:`Strings <rest-cheatsheets-s>` - Modify string stats.
 
-    :ref:`Selectable <rest-selectable>` - Modify numerical, boolean, or string stats using a dropdown menu and spreadsheet-like interface.
+    :ref:`Stat Chart <rest-statchart>` - Modify stats using an stat view similar to the one in-game. Useful for complex games with a large number of stats.
 
 .. toctree::
    :maxdepth: 2
@@ -59,7 +59,6 @@ Stat Modifier Tools
    intro.rst
    cheatmaster.rst
    cheatstatcharts.rst
-   cheatselectable.rst
    cheatsheets.rst
    feedback.rst
    changelog.rst
