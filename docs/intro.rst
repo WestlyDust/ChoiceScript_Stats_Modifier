@@ -48,14 +48,14 @@ Stat Modifier Tools
 
 ..  sidebar::
 
-    :ref:`Stat Chart <rest-statchart>` - Modify stats using an interface similar to the one in-game.
+	:ref:`Cheat Master <rest-cheatmaster>` - Modify stats using an interface similar to the one in-game in addition to numerical, boolean, and string stats. The most comprehensive stat modifier.
 
-    :ref:`Sheets <rest-cheatsheets>` - Modify stats using a spreadsheet-like interface.
+    :ref:`Sheets <rest-cheatsheets>` - Modify specific stat types using a spreadsheet-like interface. Offers limited stat modification.
         * :ref:`Numbers <rest-cheatsheets-n>` - Modify numerical stats.
         * :ref:`Booleans <rest-cheatsheets-b>` - Modify boolean stats.
         * :ref:`Strings <rest-cheatsheets-s>` - Modify string stats.
 
-    :ref:`Selectable <rest-selectable>` - Modify numerical, boolean, or string stats using a dropdown menu and spreadsheet-like interface.
+    :ref:`Stat Chart <rest-statchart>` - Modify stats using an stat view similar to the one in-game. Useful for complex games with a large number of stats.
 
 ..  _rest-credit:
 
