@@ -11,7 +11,6 @@ Cheat Master
         :align: left
         :class: my-class
 
-
 Load.js - Cheat Master
 ----------------------
 
