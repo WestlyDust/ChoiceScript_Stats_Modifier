@@ -50,11 +50,13 @@ let scriptHtml = (function () {
     let modifyString = "function modifyString(key, type) { let val = ''; if (type == 'custom') { console.log('Custom String'); val = document.getElementById(key + '-input').value;} else { console.log('Selected String'); val = document.getElementById(key + '-select').value;} window.opener.stats[key] = val; console.log(val, window.opener.stats[key])}";
     let modifyBoolean = "function modifyBoolean(key) { let val = document.getElementById(key).value; if (val == 'true') { window.opener.stats[key] = false; } else { window.opener.stats[key] = true; } console.log(val, window.opener.stats[key])}";
 
+    let filterTable = "function filterTable(searchInputId, tableId) { let filterValue = document.getElementById(searchInputId).value.toLowerCase(); let table = document.getElementById(tableId); let rows = table.getElementsByTagName('tr'); for (let i = 0; i < rows.length; i++) { let cells = rows[i].getElementsByTagName('td'); let rowVisible = false; for (let j = 0; j < cells.length; j++) { let cellValue = cells[j].textContent || cells[j].innerText; if (cellValue.toLowerCase().indexOf(filterValue) > -1) { rowVisible = true; break; } } rows[i].style.display = rowVisible ? '' : 'none'; } }";
+
     let closeChildWindow = "function closeChildWindow() {const childWindow = window.open('', '47288'); childWindow.close(); }";
 
     let showTab = "function showTab(tabIndex) { var tabs = document.querySelectorAll('.tabContentItem'); tabs.forEach(function(tab) { console.log(tab); tab.style.display = 'none'; }); tabs[tabIndex].style.display = 'block'; }";
 
-    return opposedDrag + singleDrag + updateStat + modifyString + modifyBoolean + closeChildWindow + showTab;
+    return opposedDrag + singleDrag + updateStat + modifyString + modifyBoolean + filterTable + closeChildWindow + showTab;
 })();
 
 let baseHtml = (function () {
@@ -66,6 +68,7 @@ let baseHtml = (function () {
     htmlBuilder += 'th { padding-top: 6px; padding-bottom: 6px; text-align: left;}'
     htmlBuilder += 'td { padding: 3px; }'
     htmlBuilder += "a {color: blue;text-decoration: underline;cursor: pointer}";
+    htmlBuilder += "button.tabButton {appearance: none; border-width: 1px;} button.tabButton:hover {background-color: #d9d9d9}";
     htmlBuilder += "#main {line-height: 1.5}";
     htmlBuilder += ".tabContentItem { display: none; }";
 	htmlBuilder += ".container {position: absolute;left: 0;right: 0;margin: 0 1ch;animation-duration: .5s;-webkit-animation-duration: .5s;transition-property: opacity;transition-duration: .5s;transition-timing-function: ease-in;-webkit-transition-property: opacity;-webkit-transition-duration: .5s;-webkit-transition-timing-function: ease-in}";
@@ -73,7 +76,8 @@ let baseHtml = (function () {
 	htmlBuilder += ".opposed {background-color: #6d6dfc}";
 	htmlBuilder += ".statText {margin-left: 2ex;text-indent: -1ex}";
 	htmlBuilder += ".statBar>span,.statLine>span {position: relative;z-index: 1;white-space: nowrap}";
-	htmlBuilder += ".statValue {background-color: #ff5955;position: absolute;top: 0;left: 0;height: 100%;z-index: -1}";
+    htmlBuilder += ".statValue {background-color: #ff5955;position: absolute;top: 0;left: 0;height: 100%;z-index: -1}";
+    htmlBuilder += ".searchInput {margin-bottom: 5px;}"
 	htmlBuilder += "input[type=radio],input[type=checkbox] {margin-right: 1ch;}";
 	htmlBuilder += "h1 {font-size: 1.5em;font-weight: 400;}";
 	htmlBuilder += "h2 {font-size: 1.125em;font-weight: 400;}";
@@ -184,7 +188,9 @@ async function GenerateNumericalHtml() {
         return Promise.resolve(numericalHtml);
     }
 
-    numericalHtml += '<table>';
+    numericalHtml += `<input type="text" id="searchNumerical" class="searchInput" oninput="filterTable('searchNumerical', 'numericalTable')" placeholder="Search...">`;
+
+    numericalHtml += '<table id="numericalTable" class="statTable">';
     numericalHtml += '<tr><th>Stat</th>';
     numericalHtml += '<th>Value</th></tr>';
 
@@ -233,7 +239,9 @@ async function GenerateBooleanHtml() {
         return Promise.resolve(booleanHtml);
     }
 
-    booleanHtml += '<table>';
+    booleanHtml += `<input type="text" id="searchBoolean" class="searchInput" oninput="filterTable('searchBoolean', 'booleanTable')" placeholder="Search...">`;
+
+    booleanHtml += '<table id="booleanTable" class="statTable">';
     booleanHtml += '<tr><th>Stat</th>';
     booleanHtml += '<th>Value</th></tr>';
 
@@ -274,9 +282,12 @@ async function GenerateStringHtml() {
         return Promise.resolve(stringHtml);
     }
 
-    stringHtml += '<table>';
+    stringHtml += `<input type="text" id="searchString" class="searchInput" oninput="filterTable('searchString', 'stringTable')" placeholder="Search...">`;
+
+    stringHtml += '<table id="stringTable" class="statTable">';
     stringHtml += '<tr><th>Stat</th>';
-    stringHtml += '<th>Value</th></tr>';
+    stringHtml += '<th>Game Values</th>';
+    stringHtml += '<th>Input Value</th></tr>';
 
     for (let index = 0; index < modifiableStringStats.length; index++) {
         let key = modifiableStringStats[index].key;
@@ -294,9 +305,9 @@ async function GenerateStringHtml() {
                 stringHtml += '<option value="' + value + '">' + value + '</option>';
             }
         }
-        stringHtml += '</select>';
-        stringHtml += '<input type="text" id="' + key + '-input" value="' + value + '" oninput="modifyString(\'' + key + '\', \'' + customType + '\')">';
-        stringHtml += '</td></tr>';
+        stringHtml += '</select></td>';
+        stringHtml += '<td><input type="text" id="' + key + '-input" value="' + value + '" oninput="modifyString(\'' + key + '\', \'' + customType + '\')"></td>';
+        stringHtml += '</tr>';
     }
 
     stringHtml += "</table></div></div>";
@@ -456,32 +467,68 @@ function ParseFileText(text) {
 			// continue reading the scene file line by line, updating the current line number as we go
 			while (currentLine < lines.length) {
 				// update the line
-				line = lines[currentLine];
-				// get the current indentation level
-				let currentIndent = line.search(/\S|$/);
+                line = lines[currentLine];
+                // If the line is blank or a *comment, skip it
+                let skippable = line.trim().length == 0 || line.trim().startsWith('*comment');
+                if (skippable) {
+                    currentLine++;
+                }
+                else {
+                    // get the current indentation level
+                    let currentIndent = line.search(/\S|$/);
 
-				// If the next line is indented more than the first line, add it to the rawStatChart
-				if (currentIndent > firstIndent) {
-					rawStatChart.push(line);
-					currentLine++;
-				} else {
-					break;
-				}
+                    // If the next line is indented more than the first line, add it to the rawStatChart
+                    if (currentIndent > firstIndent) {
+                        rawStatChart.push(line);
+                        currentLine++;
+                    }
+                    else {
+                        break;
+                    }
+                }
 			}
 			ParseStatChart(rawStatChart);
 		} 
 		else if (!line.trim().startsWith('*') && line.search(/\S|$/) == 0) {
 			if (line.trim().endsWith('}') && line.includes('$','{')) {
 				// Some lines aren't in a stat chart, but can still be displayed. They need to follow a specific format
-				let type = 'text';
-				let variable = line.substring(line.indexOf('{') + 1, line.indexOf('}')).toLowerCase();
-				let label = line.substring(0, line.indexOf('$')).trim().replace(/\W+$/, '');
+                // The format is: label ${variable} however, it's possible to have multiple variables in a line, so we could have: label ${variable} ${variable2}
 
-				line = type + ' ' + variable + ' ' + label;
-				ParseStatChart([line]);
+                let type = 'text';
+                // check the number of variables in the line
+                let openBrackets = line.split('{').length - 1;
+                let closeBrackets = line.split('}').length - 1;
+
+                let numVariables = Math.min(openBrackets, closeBrackets);
+
+                if (numVariables > 1) {
+                    let lines = [];
+                    // if there is more than one variable, the labels will just be the variable name with the first letter capitalized
+                    let variables = line.match(/\{\w+}/g);
+                    variables.forEach((variable) => {
+                        variable = variable.replace('{', '').replace('}', '');
+                        let label = variable.charAt(0).toUpperCase() + variable.slice(1);
+                        line = type + ' ' + variable + ' ' + label;
+                        lines.push(line);
+                    });
+                    ParseStatChart(lines);
+                }
+                else {
+                    let variable = line.substring(line.indexOf('{') + 1, line.indexOf('}')).toLowerCase();
+                    let label = line.substring(0, line.indexOf('$')).trim().replace(/\W+$/, '');
+
+                    // for the label, remove all instances of [b] and [/b] and [i] and [/i]
+                    label = label.replace(/\[b\]|\[\/b\]/g, '').replace(/\[i\]|\[\/i\]/g, '');
+                    // then remove all non-alphanumeric characters from the end of the label
+                    label = label.replace(/\W+$/, '');
+
+                    line = type + ' ' + variable + ' ' + label;
+
+                    ParseStatChart([line]);
+                }
 			}
 			else {
-				// This is just a regular line of text, so lets just add it to the statPage
+				// This is just a regular line of text, so lets just add it to the statPage if they are likely labels for stat charts
 				// Only grabs lines that are like [b]label[/b] or [i]label[/i]
 				// Don't grabs lines with more than five words (arbitrary number, but it's a good cutoff)
 				let isBold = line.includes('[b]') && line.includes('[/b]');
