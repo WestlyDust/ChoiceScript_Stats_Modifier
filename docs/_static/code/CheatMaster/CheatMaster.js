@@ -105,9 +105,6 @@ let booleanHtml;
 let stringHtml;
 
 async function GenerateStatChartsHtml() {
-    if (statChartsHtml) {
-        return Promise.resolve(statChartsHtml);
-    }
     console.log("   Generating StatCharts HTML...");
 
     statChartsHtml = "";
@@ -173,9 +170,6 @@ async function GenerateStatChartsHtml() {
 }
 
 async function GenerateNumericalHtml() {
-    if (numericalHtml) {
-        return Promise.resolve(numericalHtml);
-    }
     console.log("   Generating Numerical HTML...");
 
     numericalHtml = "";
@@ -224,9 +218,6 @@ async function GenerateNumericalHtml() {
 }
 
 async function GenerateBooleanHtml() {
-    if (booleanHtml) {
-        return Promise.resolve(booleanHtml);
-    }
     console.log("   Generating Boolean HTML...");
 
     booleanHtml = "";
@@ -264,9 +255,6 @@ async function GenerateBooleanHtml() {
 }
 
 async function GenerateStringHtml() {
-    if (stringHtml) {
-        return Promise.resolve(stringHtml);
-    }
     console.log("   Generating String HTML...");
 
     selectType = "select";
@@ -320,9 +308,6 @@ async function GenerateStringHtml() {
 let CheatPageHtml;
 
 async function GenerateHtml() {
-    if (CheatPageHtml) {
-        return Promise.resolve(CheatPageHtml);
-    }
     console.log("Generating HTML...");
 
     CheatPageHtml = baseHtml;
@@ -463,8 +448,6 @@ function ParseFileText(text) {
 			let firstIndent = line.search(/\S|$/);
 			// then we move to the next line
 			currentLine++;
-			// while we are still in the stat chart (i.e. the indentation level is greater than the first line)
-			// continue reading the scene file line by line, updating the current line number as we go
 			while (currentLine < lines.length) {
 				// update the line
                 line = lines[currentLine];
@@ -491,9 +474,6 @@ function ParseFileText(text) {
 		} 
 		else if (!line.trim().startsWith('*') && line.search(/\S|$/) == 0) {
 			if (line.trim().endsWith('}') && line.includes('$','{')) {
-				// Some lines aren't in a stat chart, but can still be displayed. They need to follow a specific format
-                // The format is: label ${variable} however, it's possible to have multiple variables in a line, so we could have: label ${variable} ${variable2}
-
                 let type = 'text';
                 // check the number of variables in the line
                 let openBrackets = line.split('{').length - 1;
@@ -528,9 +508,6 @@ function ParseFileText(text) {
                 }
 			}
 			else {
-				// This is just a regular line of text, so lets just add it to the statPage if they are likely labels for stat charts
-				// Only grabs lines that are like [b]label[/b] or [i]label[/i]
-				// Don't grabs lines with more than five words (arbitrary number, but it's a good cutoff)
 				let isBold = line.includes('[b]') && line.includes('[/b]');
 				let isItalic = line.includes('[i]') && line.includes('[/i]');
 				let wordCount = line.trim().split(/\s+/).length;
@@ -687,8 +664,6 @@ function handleStatsChange() {
 function compileStatCharts() {
     return new Promise((resolve, reject) => {
 
-        console.log(`Compiling Stat Charts...`);
-
         try {
             let statKeyValues = Object.entries(stats);
             // Clear the modifiableStatChartsStats array
@@ -754,15 +729,11 @@ function compileStatCharts() {
 			reject(error);
         }
 
-        console.log(`*** Stat Charts Compiled ***`);
-
 	});
 }
 
 function compileAllStats() {
     return new Promise((resolve, reject) => {
-
-        console.log(`Compiling All Stats...`);
 
         try {
             modifiableBooleanStats = [];
@@ -788,7 +759,6 @@ function compileAllStats() {
                         let val = value;
                         if (typeof val == "string") {
                             // variable is a string
-                            // will want to change this to support strings with no set value
                             if (typeof stringValues[key] != "undefined" && stringValues[key].length > 1) {
                                 modifiableStringStats.push({ key: key, value: val, displayType: "string" });
                             }
@@ -806,21 +776,15 @@ function compileAllStats() {
             reject(error);
         }
 
-        console.log(`*** All Stats Compiled ***`);
-
     });
 }
 
 async function complileHtml() {
-    console.log(`Compiling HTML...`);
-
     if (CheatPageHtml) {
         CheatPagePromise = Promise.resolve(CheatPageHtml);
     } else {
         CheatPagePromise = await GenerateHtml();
     }
-
-    console.log(`*** HTML Compiled ***`);
 
     if (loadCheatButton) {
         btns.innerHTML = btns.innerHTML + "<button id='cheatButton' class='spacedLink' onclick='loadCheats()'>Modify Stats</button>";
