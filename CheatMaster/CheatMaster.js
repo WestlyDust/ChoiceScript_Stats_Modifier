@@ -261,8 +261,6 @@ async function GenerateBooleanHtml() {
 }
 
 async function GenerateStringHtml() {
-    console.log("   Generating String HTML...");
-
     selectType = "select";
     customType = "custom";
 
@@ -302,8 +300,6 @@ async function GenerateStringHtml() {
     }
 
     stringHtml += "</table></div></div>";
-
-    console.log("   *** Generated String HTML ***");
 
     return Promise.resolve(stringHtml);
 }
