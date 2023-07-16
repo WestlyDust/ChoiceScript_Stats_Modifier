@@ -99,23 +99,50 @@ let baseHtml = (function () {
 	return htmlBuilder;
 })();
 
-let statChartsHtml;
-let numericalHtml;
-let booleanHtml;
-let stringHtml;
+let statChartsBuilder = (function () {
+    let htmlBuilder = "";
+    htmlBuilder += "<div class='tabContentItem' id='statChartsTab'>";
+    htmlBuilder += '<div style="text-align: center;margin-bottom: 10;"><h2 style="margin-bottom: .1em;">STAT CHARTS</h2>';
+
+    return htmlBuilder;
+})();
+
+let numericalBuilder = (function () {
+    let htmlBuilder = "";
+    htmlBuilder += "<div class='tabContentItem' id='numericalStatsTab'>";
+    htmlBuilder += '<div style="text-align: center;margin-bottom: 10;"><h2 style="margin-bottom: .1em;">NUMERICAL STATS</h2>';
+
+    return htmlBuilder;
+})();
+
+let booleanBuilder = (function () {
+    let htmlBuilder = "";
+    htmlBuilder += "<div class='tabContentItem' id='booleanStatsTab'>";
+    htmlBuilder += '<div style="text-align: center;margin-bottom: 10;"><h2 style="margin-bottom: .1em;">BOOLEAN STATS</h2>';
+
+    return htmlBuilder;
+})();
+
+let stringBuilder = (function () {
+    let htmlBuilder = "";
+    htmlBuilder += "<div class='tabContentItem' id='stringStatsTab'>";
+    htmlBuilder += '<div style="text-align: center;margin-bottom: 10;"><h2 style="margin-bottom: .1em;">STRING STATS</h2>';
+
+    return htmlBuilder;
+})();
 
 async function GenerateStatChartsHtml() {
     console.log("   Generating StatCharts HTML...");
 
-    statChartsHtml = "";
-    statChartsHtml += "<div class='tabContentItem' id='statChartsTab'>";
-
-    statChartsHtml += '<div style="text-align: center;margin-bottom: 10;"><h2 style="margin-bottom: .1em;">STAT CHARTS</h2>';
+    let statChartsHtml = statChartsBuilder;
 
     if (modifiableStatChartsStats.length <= 0) {
         statChartsHtml += '<div style="text-align: center;margin-bottom: 10;"><h1 style="margin-bottom: .1em;">There are no stat charts to modify.</h1></div></div></div>';
         return Promise.resolve(statChartsHtml);
     }
+
+    console.log(modifiableStatChartsStats);
+    console.log(statPage);
 
     let statPageIndex = 0;
     for (let index = 0; index < modifiableStatChartsStats.length; index++) {
@@ -172,10 +199,7 @@ async function GenerateStatChartsHtml() {
 async function GenerateNumericalHtml() {
     console.log("   Generating Numerical HTML...");
 
-    numericalHtml = "";
-    numericalHtml += "<div class='tabContentItem' id='numericalStatsTab'>";
-    
-    numericalHtml += '<div style="text-align: center;margin-bottom: 10;"><h2 style="margin-bottom: .1em;">NUMERICAL STATS</h2>';
+    let numericalHtml = numericalBuilder;
 
     if (modifiableNumericalStats.length <= 0) {
         numericalHtml += '<div style="text-align: center;margin-bottom: 10;"><h1 style="margin-bottom: .1em;">There are no numerical stats to modify.</h1></div></div></div>';
@@ -220,10 +244,7 @@ async function GenerateNumericalHtml() {
 async function GenerateBooleanHtml() {
     console.log("   Generating Boolean HTML...");
 
-    booleanHtml = "";
-    booleanHtml += "<div class='tabContentItem' id='booleanStatsTab'>";
-
-    booleanHtml += '<div style="text-align: center;margin-bottom: 10;"><h2 style="margin-bottom: .1em;">BOOLEAN STATS</h2>';
+    let booleanHtml = booleanBuilder;
 
     if (modifiableBooleanStats.length <= 0) {
         booleanHtml += '<div style="text-align: center;margin-bottom: 10;"><h1 style="margin-bottom: .1em;">There are no boolean stats to modify.</h1></div></div></div>';
@@ -260,10 +281,7 @@ async function GenerateStringHtml() {
     selectType = "select";
     customType = "custom";
 
-    stringHtml = "";
-    stringHtml += "<div class='tabContentItem' id='stringStatsTab'>";
-
-    stringHtml += '<div style="text-align: center;margin-bottom: 10;"><h2 style="margin-bottom: .1em;">STRING STATS</h2>';
+    let stringHtml = stringBuilder;
 
     if (modifiableStringStats.length <= 0) {
         stringHtml += '<div style="text-align: center;margin-bottom: 10;"><h1 style="margin-bottom: .1em;">There are no string stats to modify.</h1></div></div></div>';
@@ -327,36 +345,16 @@ async function GenerateHtml() {
 
     CheatPageHtml += "<div id='tabContent'>";
 
-    let statChartsPromise;
-    if (statChartsHtml) {
-        statChartsPromise = Promise.resolve(statChartsHtml);
-    } else {
-        statChartsPromise = await GenerateStatChartsHtml();
-    }
+    let statChartsPromise = await GenerateStatChartsHtml();
     CheatPageHtml += await statChartsPromise;
 
-    let numericalPromise;
-    if (numericalHtml) {
-        numericalPromise = Promise.resolve(numericalHtml);
-    } else {
-        numericalPromise = await GenerateNumericalHtml();
-    }
+    let numericalPromise = await GenerateNumericalHtml();
     CheatPageHtml += await numericalPromise;
 
-    let booleanPromise;
-    if (booleanHtml) {
-        booleanPromise = Promise.resolve(booleanHtml);
-    } else {
-        booleanPromise = await GenerateBooleanHtml();
-    }
+    let booleanPromise = await GenerateBooleanHtml();
     CheatPageHtml += await booleanPromise;
 
-    let stringPromise;
-    if (stringHtml) {
-        stringPromise = Promise.resolve(stringHtml);
-    } else {
-        stringPromise = await GenerateStringHtml();
-    }
+    let stringPromise = await GenerateStringHtml();
     CheatPageHtml += await stringPromise;
 
     CheatPageHtml += "</div></div></div></div>";
@@ -366,9 +364,23 @@ async function GenerateHtml() {
     return Promise.resolve(CheatPageHtml);
 }
 
+function removeBold(line) {
+    line = line.replace(/\[b\]/g, '').replace(/\[\/b\]/g, '');
+    line = line.trim();
+
+    return line;
+}
+function removeItalic(line) {
+    line = line.replace(/\[i\]/g, '').replace(/\[\/i\]/g, '');
+    line = line.trim();
+
+    return line;
+}
+
+let statIndex = 0;
 function ParseStatChart(rawStatChart) {
 	// Parse the stat chart
-	let stat = {};
+    let stat = {};
 
 	for (let i = 0; i < rawStatChart.length; i++) {
 		let line = rawStatChart[i];
@@ -388,7 +400,7 @@ function ParseStatChart(rawStatChart) {
 				label = variable;
 				variable = variable.toLowerCase();
 			}
-			stat = {type, variable, label};
+            stat = { statIndex, type, variable, label};
 			statCharts.push(stat);
 			statPage.push(stat);
 		}
@@ -401,7 +413,7 @@ function ParseStatChart(rawStatChart) {
 				label = variable;
 				variable = variable.toLowerCase();
 			}
-			stat = {type, variable, label};
+            stat = { statIndex, type, variable, label};
 			statCharts.push(stat);
 			statPage.push(stat);
 		}
@@ -421,14 +433,15 @@ function ParseStatChart(rawStatChart) {
 				variable = variable.toLowerCase();
 				i++;
 			}
-			stat = {type, variable, label, opposed_label};
+            stat = { statIndex, type, variable, label, opposed_label};
 			statCharts.push(stat);
 			statPage.push(stat);
 		}
 		else {
 			console.log('Error: Invalid display type -> ' + line);
 			return;
-		}
+        }
+        statIndex++;
 	}
 }
 
@@ -472,8 +485,13 @@ function ParseFileText(text) {
 			}
 			ParseStatChart(rawStatChart);
 		} 
-		else if (!line.trim().startsWith('*') && line.search(/\S|$/) == 0) {
-			if (line.trim().endsWith('}') && line.includes('$','{')) {
+        else if (!line.trim().startsWith('*') && line.search(/\S|$/) == 0) {
+            let isBold = line.includes('[b]') && line.endsWith('[/b]');
+            let isItalic = line.includes('[i]') && line.endsWith('[/i]');
+            line = removeBold(line);
+            line = removeItalic(line);
+
+            if (line.endsWith('}') && line.includes('$', '{')) {
                 let type = 'text';
                 // check the number of variables in the line
                 let openBrackets = line.split('{').length - 1;
@@ -497,23 +515,16 @@ function ParseFileText(text) {
                     let variable = line.substring(line.indexOf('{') + 1, line.indexOf('}')).toLowerCase();
                     let label = line.substring(0, line.indexOf('$')).trim().replace(/\W+$/, '');
 
-                    // for the label, remove all instances of [b] and [/b] and [i] and [/i]
-                    label = label.replace(/\[b\]|\[\/b\]/g, '').replace(/\[i\]|\[\/i\]/g, '');
-                    // then remove all non-alphanumeric characters from the end of the label
-                    label = label.replace(/\W+$/, '');
-
                     line = type + ' ' + variable + ' ' + label;
 
                     ParseStatChart([line]);
                 }
 			}
 			else {
-				let isBold = line.includes('[b]') && line.includes('[/b]');
-				let isItalic = line.includes('[i]') && line.includes('[/i]');
-				let wordCount = line.trim().split(/\s+/).length;
-				if (wordCount <= 5 && (isBold || isItalic)) {
+				let wordCount = line.split(/\s+/).length;
+                if (wordCount <= 5 && (isBold || isItalic)) {
 					type = 'display';
-					label = line.trim().replace(/\[b\]|\[\/b\]/g, '').replace(/\[i\]|\[\/i\]/g, '').replace(/\W+$/, '');
+                    label = line.replace(/\W+$/, '')
 					if (label != '' && label.length > 0) {
 						displayText = {type, label};
 						statPage.push(displayText);
@@ -689,20 +700,20 @@ function compileStatCharts() {
                             let val = value;
                             if (stat.type == "opposed_pair") {
                                 let opposedKey = stat.opposed_label.toLowerCase();
-                                modifiableStatChartsStats.push({ key: key, opposedKey: opposedKey, value: val, statType: "boolean", displayType: stat.type, label: stat.label, opposedLabel: stat.opposed_label });
+                                modifiableStatChartsStats.push({ index: stat.statIndex, key: key, opposedKey: opposedKey, value: val, statType: "boolean", displayType: stat.type, label: stat.label, opposedLabel: stat.opposed_label });
                             }
                             else {
-                                modifiableStatChartsStats.push({ key: key, value: val, statType: "boolean", displayType: stat.type, label: stat.label });
+                                modifiableStatChartsStats.push({ index: stat.statIndex, key: key, value: val, statType: "boolean", displayType: stat.type, label: stat.label });
                             }
                         }
                         else if ((Number.isNaN(value) == false && value != null && typeof value != "undefined" && hasLetters == false && value != "") || Number.isInteger(value) == true) {
                             let val = parseInt(value);
 							if (stat.type == "opposed_pair") {
 							    let opposedKey = stat.opposed_label.toLowerCase();
-								modifiableStatChartsStats.push({ key: key, opposedKey: opposedKey, value: val, statType: "number", displayType: stat.type, label: stat.label, opposedLabel: stat.opposed_label});
+                                modifiableStatChartsStats.push({ index: stat.statIndex, key: key, opposedKey: opposedKey, value: val, statType: "number", displayType: stat.type, label: stat.label, opposedLabel: stat.opposed_label});
 							}
 							else {
-								modifiableStatChartsStats.push({ key: key, value: val, statType: "number", displayType: stat.type, label: stat.label });
+                                modifiableStatChartsStats.push({ index: stat.statIndex, key: key, value: val, statType: "number", displayType: stat.type, label: stat.label });
 							}
 						}
 						else {
@@ -710,10 +721,10 @@ function compileStatCharts() {
 							if (typeof val == "string") {
 								if (stat.type == "opposed_pair") {
 									let opposedKey = stat.opposed_label.toLowerCase();
-									modifiableStatChartsStats.push({ key: key, opposedKey: opposedKey, value: val, statType: "string", displayType: stat.type, label: stat.label, opposedLabel: stat.opposed_label});
+                                    modifiableStatChartsStats.push({ index: stat.statIndex, key: key, opposedKey: opposedKey, value: val, statType: "string", displayType: stat.type, label: stat.label, opposedLabel: stat.opposed_label});
 								}
 								else {
-									modifiableStatChartsStats.push({ key: key, value: val, statType: "string", displayType: stat.type, label: stat.label });
+                                    modifiableStatChartsStats.push({ index: stat.statIndex, key: key, value: val, statType: "string", displayType: stat.type, label: stat.label });
 								}
 							}
 						}
@@ -721,7 +732,8 @@ function compileStatCharts() {
 						console.log(`Error (${err}) -> ${key}: ${value}`);
 					}
 				}
-			}
+            }
+            modifiableStatChartsStats = Object.values(modifiableStatChartsStats).sort((a, b) => a.index - b.index);
 			resolve();
 		}
 		catch (error) {
@@ -780,16 +792,14 @@ function compileAllStats() {
 }
 
 async function complileHtml() {
-    if (CheatPageHtml) {
-        CheatPagePromise = Promise.resolve(CheatPageHtml);
-    } else {
-        CheatPagePromise = await GenerateHtml();
-    }
+    await GenerateHtml();
 
     if (loadCheatButton) {
         btns.innerHTML = btns.innerHTML + "<button id='cheatButton' class='spacedLink' onclick='loadCheats()'>Modify Stats</button>";
         loadCheatButton = false;
     }
+
+    return Promise.resolve();
 }
 
 // Function to update the modifiableStatChartsStats and statModifiers arrays
