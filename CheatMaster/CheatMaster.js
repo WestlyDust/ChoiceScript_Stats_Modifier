@@ -132,17 +132,12 @@ let stringBuilder = (function () {
 })();
 
 async function GenerateStatChartsHtml() {
-    console.log("   Generating StatCharts HTML...");
-
     let statChartsHtml = statChartsBuilder;
 
     if (modifiableStatChartsStats.length <= 0) {
         statChartsHtml += '<div style="text-align: center;margin-bottom: 10;"><h1 style="margin-bottom: .1em;">There are no stat charts to modify.</h1></div></div></div>';
         return Promise.resolve(statChartsHtml);
     }
-
-    console.log(modifiableStatChartsStats);
-    console.log(statPage);
 
     let statPageIndex = 0;
     for (let index = 0; index < modifiableStatChartsStats.length; index++) {
@@ -191,14 +186,10 @@ async function GenerateStatChartsHtml() {
 
     statChartsHtml += "</div></div>";
 
-    console.log("   *** Generated StatCharts HTML ***");
-
     return Promise.resolve(statChartsHtml);
 }
 
 async function GenerateNumericalHtml() {
-    console.log("   Generating Numerical HTML...");
-
     let numericalHtml = numericalBuilder;
 
     if (modifiableNumericalStats.length <= 0) {
@@ -236,14 +227,10 @@ async function GenerateNumericalHtml() {
 
     numericalHtml += "</table></div></div>";
 
-    console.log("   *** Generated Numerical HTML ***");
-
     return Promise.resolve(numericalHtml);
 }
 
 async function GenerateBooleanHtml() {
-    console.log("   Generating Boolean HTML...");
-
     let booleanHtml = booleanBuilder;
 
     if (modifiableBooleanStats.length <= 0) {
@@ -269,8 +256,6 @@ async function GenerateBooleanHtml() {
     }
 
     booleanHtml += "</table></div></div>";
-
-    console.log("   *** Generated Boolean HTML ***");
 
     return Promise.resolve(booleanHtml);
 }
@@ -326,7 +311,6 @@ async function GenerateStringHtml() {
 let CheatPageHtml;
 
 async function GenerateHtml() {
-    console.log("Generating HTML...");
 
     CheatPageHtml = baseHtml;
 
@@ -358,8 +342,6 @@ async function GenerateHtml() {
     CheatPageHtml += await stringPromise;
 
     CheatPageHtml += "</div></div></div></div>";
-
-    console.log("*** Generated HTML ***");
 
     return Promise.resolve(CheatPageHtml);
 }
