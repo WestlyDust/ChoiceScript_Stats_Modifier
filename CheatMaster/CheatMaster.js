@@ -20,6 +20,7 @@ else {
 	delete myInterval;
 }
 
+let childWindow;
 // get the current URL
 let url = window.location.href;
 // strip off the index.html or mygame/ from the end of the URL
@@ -833,116 +834,124 @@ async function loadCheats() {
 // every 2.5 seconds, update the existing table with the values found in the game stats. 
 // Sometimes the game will reset the stats, so this ensures the player always sees the latest values
 let myInterval = setInterval(async function () {
-    try {
-        await chartPromise;
-        await compileStatCharts();
-        await compileAllStats();
-        await complileHtml();
+    // only run if the child window is open
+    if (childWindow && !childWindow.closed) {
+        try {
+            await chartPromise;
+            await compileStatCharts();
+            await compileAllStats();
+            await complileHtml();
 
-        for (let index = 0; index < modifiableStatChartsStats.length; index++) {
-            let key = modifiableStatChartsStats[index].key;
-            let value = modifiableStatChartsStats[index].value;
-            let displayType = modifiableStatChartsStats[index].displayType;
-
-            try {
-                if (displayType == "opposed_pair") {
-                    let opposedKey = modifiableStatChartsStats[index].opposedKey;
-                    childWindow.document.getElementById(key).textContent = parseInt(value);
-                    childWindow.document.getElementById(opposedKey).textContent = (100 - parseInt(value));
-                }
-                if (displayType == "percent") {
-                    childWindow.document.getElementById(key).textContent = parseInt(value);
-                }
-                if (displayType == "text") {
-                    childWindow.document.getElementById(key).textContent = value;
-                }
-            }
-            catch (error) {
-                if (error instanceof ReferenceError) {
-                    // Error: childWindow is not defined
-                }
-                else {
-                    console.log(`Error with StatChartsStats: ${modifiableStatChartsStats} -> ${error}`);
-                }
-            }
-        }
-
-        for (let index = 0; index < modifiableBooleanStats.length; index++) {
-            let key = modifiableBooleanStats[index].key;
-            let value = modifiableBooleanStats[index].value;
-
-            try {
-                childWindow.document.getElementById(key).value = value;
-                childWindow.document.getElementById(key).checked = value;
-            }
-            catch (error) {
-                if (error instanceof ReferenceError) {
-                    // Error: childWindow is not defined
-                }
-                else {
-                    console.log(`Error with BooleanStats: ${modifiableBooleanStats} -> ${error}`);
-                }
-            }
-        }
-        for (let index = 0; index < modifiableNumericalStats.length; index++) {
-            let key = modifiableNumericalStats[index].key;
-            let value = modifiableNumericalStats[index].value;
-
-            try {
-                childWindow.document.getElementById(key).textContent = value;
-            }
-            catch (error) {
-                if (error instanceof ReferenceError) {
-                    // Error: childWindow is not defined
-                }
-                else {
-                    console.log(`Error with NumericalStats: ${modifiableNumericalStats} -> ${error}`);
-                }
-            }
-        }
-        for (let index = 0; index < modifiableStringStats.length; index++) {
-            let key = modifiableStringStats[index].key;
-            let value = modifiableStringStats[index].value;
-
-            try {
-                // two string inputs to update: key-input and key-select
-                childWindow.document.getElementById(key + "-input").value = value;
-                childWindow.document.getElementById(key + "-input").textContent = value;
-                childWindow.document.getElementById(key + "-select").value = value;
-
-                let selectElement = childWindow.document.getElementById(key + "-select");
-                let val = selectElement.value;
-                let options = selectElement.options;
+            for (let index = 0; index < modifiableStatChartsStats.length; index++) {
+                let key = modifiableStatChartsStats[index].key;
+                let value = modifiableStatChartsStats[index].value;
+                let displayType = modifiableStatChartsStats[index].displayType;
 
                 try {
-                    if (typeof options != "undefined") {
-                        for (let i = 0; i < options.length; i++) {
-                            let option = options[i];
-
-                            if (option.value != val) {
-                                option.removeAttribute("selected");
-                            }
-                            else {
-                                option.setAttribute("selected", "");
-                            }
-                        }
+                    if (displayType == "opposed_pair") {
+                        let opposedKey = modifiableStatChartsStats[index].opposedKey;
+                        childWindow.document.getElementById(key).textContent = parseInt(value);
+                        childWindow.document.getElementById(opposedKey).textContent = (100 - parseInt(value));
+                    }
+                    if (displayType == "percent") {
+                        childWindow.document.getElementById(key).textContent = parseInt(value);
+                    }
+                    if (displayType == "text") {
+                        childWindow.document.getElementById(key).textContent = value;
                     }
                 }
                 catch (error) {
-                    console.log(`Error with StringOptions: ${options} -> ${error}`);
+                    if (error instanceof ReferenceError) {
+                        // Error: childWindow is not defined
+                    }
+                    else {
+                        console.log(`Error with StatChartsStats: ${modifiableStatChartsStats} -> ${error}`);
+                    }
                 }
             }
-            catch (error) {
-                if (error instanceof ReferenceError) {
-                    // Error: childWindow is not defined
+
+            for (let index = 0; index < modifiableBooleanStats.length; index++) {
+                let key = modifiableBooleanStats[index].key;
+                let value = modifiableBooleanStats[index].value;
+
+                try {
+                    childWindow.document.getElementById(key).value = value;
+                    childWindow.document.getElementById(key).checked = value;
                 }
-                else {
-                    console.log(`Error with StringStats: ${modifiableStringStats} -> ${error}`);
+                catch (error) {
+                    if (error instanceof ReferenceError) {
+                        // Error: childWindow is not defined
+                    }
+                    else {
+                        console.log(`Error with BooleanStats: ${modifiableBooleanStats} -> ${error}`);
+                    }
+                }
+            }
+            for (let index = 0; index < modifiableNumericalStats.length; index++) {
+                let key = modifiableNumericalStats[index].key;
+                let value = modifiableNumericalStats[index].value;
+
+                try {
+                    childWindow.document.getElementById(key).textContent = value;
+                }
+                catch (error) {
+                    if (error instanceof ReferenceError) {
+                        // Error: childWindow is not defined
+                    }
+                    else {
+                        console.log(`Error with NumericalStats: ${modifiableNumericalStats} -> ${error}`);
+                    }
+                }
+            }
+            for (let index = 0; index < modifiableStringStats.length; index++) {
+                let key = modifiableStringStats[index].key;
+                let value = modifiableStringStats[index].value;
+
+                try {
+                    // two string inputs to update: key-input and key-select
+                    childWindow.document.getElementById(key + "-input").value = value;
+                    childWindow.document.getElementById(key + "-input").textContent = value;
+                    childWindow.document.getElementById(key + "-select").value = value;
+
+                    let selectElement = childWindow.document.getElementById(key + "-select");
+                    let val = selectElement.value;
+                    let options = selectElement.options;
+
+                    try {
+                        if (typeof options != "undefined") {
+                            for (let i = 0; i < options.length; i++) {
+                                let option = options[i];
+
+                                if (option.value != val) {
+                                    option.removeAttribute("selected");
+                                }
+                                else {
+                                    option.setAttribute("selected", "");
+                                }
+                            }
+                        }
+                    }
+                    catch (error) {
+                        console.log(`Error with StringOptions: ${options} -> ${error}`);
+                    }
+                }
+                catch (error) {
+                    if (error instanceof ReferenceError) {
+                        // Error: childWindow is not defined
+                    }
+                    else {
+                        console.log(`Error with StringStats: ${modifiableStringStats} -> ${error}`);
+                    }
                 }
             }
         }
-	}
-	catch (error) {
-		console.log(error);
-	}
+        catch (error) {
+            console.log(error);
+        }
+    }
+    else {
+        if (loadCheatButton) {
+            await updateStats();
+        }
+    }
 }, 3000);
