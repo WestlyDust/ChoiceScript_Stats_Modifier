@@ -1,7 +1,7 @@
 ..  _rest-savemanager:
 
 Save Manager
-==========
+============
 
 
 Modified Dashingdon Save System - ChoiceScript (c) Dan Fabulich
