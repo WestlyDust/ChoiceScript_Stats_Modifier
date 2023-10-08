@@ -30,7 +30,6 @@ console.log("Using Base Game URL: " + baseURL);
 
 let sceneList = stats.scene.nav._sceneList;
 
-let statPage = [];
 let statCharts = [];
 
 let sceneFiles = [];
@@ -140,16 +139,7 @@ async function GenerateStatChartsHtml() {
         return Promise.resolve(statChartsHtml);
     }
 
-    let statPageIndex = 0;
     for (let index = 0; index < modifiableStatChartsStats.length; index++) {
-
-        if (statPage.length > 1 && statPageIndex < statPage.length) {
-            if (statPage[statPageIndex].type == "display") {
-                statChartsHtml += '<div style="text-align: center;margin-bottom: 10;"><h2 style="margin-bottom: .1em;">' + statPage[statPageIndex].label + '</h2></div>';
-                statPageIndex++;
-            }
-            statPageIndex++;
-        }
 
         let key = modifiableStatChartsStats[index].key;
         let value = modifiableStatChartsStats[index].value;
@@ -381,7 +371,6 @@ function ParseStatChart(rawStatChart) {
 			}
             stat = { statIndex, type, variable, label};
 			statCharts.push(stat);
-			statPage.push(stat);
 		}
 		else if(type == 'percent') {
 			if(pieces.length > 2) {
@@ -394,7 +383,6 @@ function ParseStatChart(rawStatChart) {
 			}
             stat = { statIndex, type, variable, label};
 			statCharts.push(stat);
-			statPage.push(stat);
 		}
 		else if(type == 'opposed_pair') {
 			let nextLine = rawStatChart[i + 1];
@@ -414,7 +402,6 @@ function ParseStatChart(rawStatChart) {
 			}
             stat = { statIndex, type, variable, label, opposed_label};
 			statCharts.push(stat);
-			statPage.push(stat);
 		}
 		else {
 			console.log('Error: Invalid display type -> ' + line);
@@ -465,10 +452,12 @@ function ParseFileText(text) {
 			ParseStatChart(rawStatChart);
 		} 
         else if (!line.trim().startsWith('*') && line.search(/\S|$/) == 0) {
-            let isBold = line.includes('[b]') && line.endsWith('[/b]');
-            let isItalic = line.includes('[i]') && line.endsWith('[/i]');
-            line = removeBold(line);
-            line = removeItalic(line);
+            if (line.includes('[b]') || line.endsWith('[/b]')) {
+                line = removeBold(line);
+            }
+            if (line.includes('[i]') || line.endsWith('[/i]')) {
+                line = removeItalic(line);
+            }
 
             if (line.endsWith('}') && line.includes('$', '{')) {
                 let type = 'text';
@@ -498,17 +487,6 @@ function ParseFileText(text) {
 
                     ParseStatChart([line]);
                 }
-			}
-			else {
-				let wordCount = line.split(/\s+/).length;
-                if (wordCount <= 5 && (isBold || isItalic)) {
-					type = 'display';
-                    label = line.replace(/\W+$/, '')
-					if (label != '' && label.length > 0) {
-						displayText = {type, label};
-						statPage.push(displayText);
-					}
-				}
 			}
 			currentLine++;
 		}

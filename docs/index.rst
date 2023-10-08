@@ -58,6 +58,7 @@ Stat Modifier Tools
 
    intro.rst
    cheatmaster.rst
+   savemanager.rst
    cheatstatcharts.rst
    cheatsheets.rst
    feedback.rst
