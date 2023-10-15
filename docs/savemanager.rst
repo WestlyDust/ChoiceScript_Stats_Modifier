@@ -20,6 +20,22 @@ This is a slightly modified version of the save system used by Dashingdon. It's 
 
 By using this code, you acknowledge its source and adhere to the stated terms and conditions.
 
+You can add this code to your game in two ways:
+
+Method One
+----------
+
+Copy and paste the following into the browser console:
+
+.. literalinclude:: /_static/code/Inject/InjectSaves.js
+    :class: myCodeBlock
+    :language: javascript
+
+Method Two
+----------
+
+If the first method fails, copy and paste the full code into the browser console:
+
 .. literalinclude:: /_static/code/SaveSystem/SaveManagerAll.js
     :class: myCodeBlock
     :language: javascript
