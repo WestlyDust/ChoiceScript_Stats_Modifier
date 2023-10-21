@@ -35,6 +35,7 @@ let statCharts = [];
 let sceneFiles = [];
 
 let stringValues = {};
+let stringConditions = [];
 
 let modifiableStatChartsStats = [];
 let modifiableNumericalStats = [];
@@ -94,6 +95,8 @@ let baseHtml = (function () {
     htmlBuilder += ".editable:hover {border: 1px solid #ccc;border-radius: 3px;outline: none;}";
     htmlBuilder += ".inputContainer {display: block;}";
     htmlBuilder += ".error {color: red;font-size: smaller;margin-bottom: 0.2em;}";
+    htmlBuilder += ".conditional {text-decoration: underline;}";
+    htmlBuilder += ".conditional:hover::after {content: attr(title); position: absolute; background: rgba(0, 0, 0, 0.7); color: white; padding: 4px 8px; border-radius: 4px;}";
     htmlBuilder += "</style>";
 
     return htmlBuilder;
@@ -130,6 +133,12 @@ let stringBuilder = (function () {
 
     return htmlBuilder;
 })();
+
+function getTitle(statName) {
+    let title = statName.replace(/[^a-zA-Z0-9 ]/g, " ");
+    title = title.charAt(0).toUpperCase() + title.slice(1);
+    return title;
+}
 
 async function GenerateStatChartsHtml() {
     let statChartsHtml = statChartsBuilder;
@@ -197,11 +206,12 @@ async function GenerateNumericalHtml() {
     for (let index = 0; index < modifiableNumericalStats.length; index++) {
         let key = modifiableNumericalStats[index].key;
         let displayType = modifiableNumericalStats[index].displayType;
+        let title = getTitle(key);
 
         if (modifiableStatChartsStats.find(x => x.key == key) === undefined) {
 
             numericalHtml += '<tr>';
-            numericalHtml += '<td>' + key + '</td>';
+            numericalHtml += '<td>' + title + '</td>';
             numericalHtml += '<td>';
 
             numericalHtml += '<div class="statText" style="text-align: left;">';
@@ -238,9 +248,10 @@ async function GenerateBooleanHtml() {
     for (let index = 0; index < modifiableBooleanStats.length; index++) {
         let key = modifiableBooleanStats[index].key;
         let value = modifiableBooleanStats[index].value;
+        let title = getTitle(key);
 
         booleanHtml += '<tr>';
-        booleanHtml += '<td>' + key + '</td>';
+        booleanHtml += '<td>' + title + '</td>';
 
         booleanHtml += '<td><input type="checkbox" id="' + key + '" name="' + key + '" value="' + value + '" onchange="modifyBoolean(\'' + key + '\')"/><span id="bool-' + key + '">True</span></td>';
         booleanHtml += '</tr>';
@@ -254,6 +265,7 @@ async function GenerateBooleanHtml() {
 async function GenerateStringHtml() {
     selectType = "select";
     customType = "custom";
+    conditional = false;
 
     let stringHtml = stringBuilder;
 
@@ -272,9 +284,25 @@ async function GenerateStringHtml() {
     for (let index = 0; index < modifiableStringStats.length; index++) {
         let key = modifiableStringStats[index].key;
         let value = modifiableStringStats[index].value;
+        let title = getTitle(key);
+
+
+        // look for variable in stringConditions to determine if it shouldn't be modified
+        let stringCondition = stringConditions.find(x => x == key);
+        if (stringCondition != undefined) {
+            conditional = true;
+        }
+        else {
+            conditional = false;
+        }
 
         stringHtml += '<tr>';
-        stringHtml += '<td>' + key + '</td>';
+        if (conditional) {
+            stringHtml += '<td class="conditional" title="Stat is in conditional">' + '<u>' + title + '</u>' + '</td>';
+        }
+        else {
+            stringHtml += '<td>' + title + '</td>';
+        }
 
         stringHtml += '<td><select name="' + key + '" id="' + key + '-select" onchange="modifyString(\'' + key + '\', \'' + selectType + '\')">';
         let currentValue = value;
@@ -369,7 +397,14 @@ function ParseStatChart(rawStatChart) {
                 label = variable;
                 variable = variable.toLowerCase();
             }
-            stat = { statIndex, type, variable, label };
+            // look for variable in stringConditions to determine if it shouldn't be modified
+            let stringCondition = stringConditions.find(x => x == variable);
+            let conditionalString = false
+            if (stringCondition != undefined) {
+                conditionalString = true;
+            }
+
+            stat = { statIndex, type, variable, label, conditionalString };
             statCharts.push(stat);
         }
         else if (type == 'percent') {
@@ -480,6 +515,12 @@ function ParseFileText(text) {
                     ParseStatChart(lines);
                 }
                 else {
+                    if (line.includes('[b]') || line.endsWith('[/b]')) {
+                        line = removeBold(line);
+                    }
+                    if (line.includes('[i]') || line.endsWith('[/i]')) {
+                        line = removeItalic(line);
+                    }
                     let variable = line.substring(line.indexOf('{') + 1, line.indexOf('}')).toLowerCase();
                     let label = line.substring(0, line.indexOf('$')).trim().replace(/\W+$/, '');
 
@@ -533,6 +574,90 @@ let sceneFilePromise = new Promise(function (resolve) {
     resolve(sceneFiles);
 });
 
+function addStringOption(line) {
+    let lineElements = line.trim().split(" ");
+    if (lineElements.length >= 3 && lineElements[2].startsWith('"')) {
+        try {
+            // Extract the name of the string
+            let name = lineElements[1].toLowerCase();
+            // Extract the value of the string
+            let value = line.split('"')[1];
+            stringValues[name] = stringValues[name] || [];
+            if (!stringValues[name].includes(value)) {
+                // Add the value to the stringValues object
+                stringValues[name].push(value);
+            }
+        }
+        catch (err) {
+            console.log(`   Error at ${line} -> ${err}`);
+        }
+    }
+}
+function lineExists(line) {
+    if (line != "" && typeof line != "undefined" && line != undefined) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+function lineAssignable(line) {
+    if (!lineExists(line)) {
+        return false;
+    }
+    if ((line.startsWith("*create") || line.startsWith("*set")) && line.split(" ").length > 2) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+function lineConditional(line) {
+    if (!lineExists(line)) {
+        return false;
+    }
+    if (line.startsWith("*if") || line.startsWith("*elseif") || line.startsWith("*elsif") || line.startsWith("*selectable_if")) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function extractConditionalStatements(line) {
+    let regexMatcher = /\((.+?)\)/g;
+    let matches = line.match(regexMatcher);
+
+    if (matches) {
+        for (let i = 0; i < matches.length; i++) {
+            let innerText = matches[i].substring(1, matches[i].length - 1); // Remove outer parentheses
+            extractConditionalStatements(innerText); // Recursively process inner text
+        }
+    }
+    else {
+        // No more nested parentheses
+        line = line.replace(/\(|\)/g, '');
+        // Determine if = or != is used. If so, split the line on that character
+        let splitChar = '';
+        if (line.includes('!=')) {
+            splitChar = '!=';
+        }
+        else if (line.includes('=')) {
+            splitChar = '=';
+        }
+        if (splitChar != '') {
+            let splitLine = line.split(splitChar);
+            let variable = splitLine[0].trim().toLowerCase();
+            if (stringValues[variable]) {
+                // Don't add a duplicate
+                if (!stringConditions.includes(variable)) {
+                    stringConditions.push(variable);
+                }
+            }
+        }
+    }
+}
+
 function getstringOptions() {
     console.log(`Loading String Options...`);
 
@@ -561,26 +686,16 @@ function getstringOptions() {
             for (let j = 0; j < sceneLines.length; j++) {
                 try {
                     let line = sceneLines[j].trim();
-                    if (line != "" && typeof line != "undefined" && line != undefined) {
+                    if (lineExists(line)) {
                         // Check if the line starts with *create or *temp or *set
-                        if ((line.startsWith("*create") || line.startsWith("*set")) && line.split(" ").length > 2) {
-                            let lineElements = line.trim().split(" ");
-                            if (lineElements.length >= 3 && lineElements[2].startsWith('"')) {
-                                try {
-                                    // Extract the name of the string
-                                    let name = lineElements[1].toLowerCase();
-                                    // Extract the value of the string
-                                    let value = line.split('"')[1];
-                                    stringValues[name] = stringValues[name] || [];
-                                    if (!stringValues[name].includes(value)) {
-                                        // Add the value to the stringValues object
-                                        stringValues[name].push(value);
-                                    }
-                                }
-                                catch (err) {
-                                    console.log(`   Error at ${line} -> ${err}`);
-                                }
-                            }
+                        if (lineAssignable(line)) {
+                            addStringOption(line)
+                        }
+                        // Check if a string stat is being used as a condition, and if so, add it to the conditionStrings array
+                        if (lineConditional(line)) {
+                            // Remove the conditional keywords
+                            line = line.replace(/\*if|\*elseif|\*elsif|\*selectable_if/g, '');
+                            extractConditionalStatements(line);
                         }
                     }
                 }
@@ -762,6 +877,7 @@ async function complileHtml() {
 // Function to update the modifiableStatChartsStats and statModifiers arrays
 async function updateStats() {
     await chartPromise;
+    await stringOptionsPromise;
     await compileStatCharts();
     await compileAllStats();
     await complileHtml();
@@ -816,6 +932,7 @@ let myInterval = setInterval(async function () {
     if (childWindow && !childWindow.closed) {
         try {
             await chartPromise;
+            await stringOptionsPromise;
             await compileStatCharts();
             await compileAllStats();
             await complileHtml();
