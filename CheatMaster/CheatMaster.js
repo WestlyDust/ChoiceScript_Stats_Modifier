@@ -373,6 +373,12 @@ function removeItalic(line) {
 
     return line;
 }
+function removeBoldItalic(line) {
+    line = line.replace(/\[b\]/g, '').replace(/\[\/b\]/g, '').replace(/\[i\]/g, '').replace(/\[\/i\]/g, '');
+    line = line.trim();
+
+    return line;
+}
 
 let statIndex = 0;
 function ParseStatChart(rawStatChart) {
@@ -391,20 +397,14 @@ function ParseStatChart(rawStatChart) {
         if (type == 'text') {
             if (pieces.length > 2) {
                 label = line.substring(line.indexOf(pieces[2])).trim();
+                label = removeBoldItalic(label);
                 variable = variable.toLowerCase();
             }
             else {
                 label = variable;
                 variable = variable.toLowerCase();
             }
-            // look for variable in stringConditions to determine if it shouldn't be modified
-            let stringCondition = stringConditions.find(x => x == variable);
-            let conditionalString = false
-            if (stringCondition != undefined) {
-                conditionalString = true;
-            }
-
-            stat = { statIndex, type, variable, label, conditionalString };
+            stat = { statIndex, type, variable, label };
             statCharts.push(stat);
         }
         else if (type == 'percent') {
